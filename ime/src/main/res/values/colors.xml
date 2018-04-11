@@ -3,4 +3,18 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="default_key_selected_bg">#0373dd</color>
+
+    <color name="default_soft_key_label">#FFFFFF</color>
+    <color name="default_soft_key_normal_bg">#242c2c</color>
+    <color name="default_soft_key_stroke">#FFFFFF</color>
+
+    <color name="toggle_key_label">#F0F0F0</color>
+    <color name="toggle_key_normal_bg">#424A6A</color>
+    <color name="toggle_key_stroke">#b6c4e6</color>
+    
+    <color name="dividing_color">#39415C</color>
+
+    <color name="keyboard_background_color">#2D344E</color>
 </resources>

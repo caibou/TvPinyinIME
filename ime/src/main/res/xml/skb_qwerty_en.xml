@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard >
+
+    <row>
+        <!-- Switch to Chinese keyboard button -->
+        <key label="英/中" width="178px" text_color="@color/toggle_key_label"
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
+
+        <keys labels="Q|W|E|R|T|Y|U|I|O|P" codes="45|51|33|46|48|53|49|37|43|44" splitter="|"/>
+
+        <key label="@" />
+
+        <!-- Delete button -->
+        <key icon="" width="110px" stroke_color="@color/toggle_key_stroke"
+            normal_bg_color="@color/toggle_key_normal_bg"/>
+    </row>
+
+    <row>
+        <key label="123" width="178px" text_color="@color/toggle_key_label"
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
+
+        <keys labels="A|S|D|F|G|H|J|K|L" codes="29|47|32|34|35|36|38|39|40" splitter="|"/>
+
+        <key label="?" />
+
+        <key label="," />
+
+        <key label="下一个" label_orientation="110px" stroke_color="@color/toggle_key_stroke"
+            normal_bg_color="@color/toggle_key_normal_bg" cross_row="2"/>
+    </row>
+
+    <row>
+        <key label="符" width="178px" text_color="@color/toggle_key_label"
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
+
+        <!-- Case key -->
+        <key icon="" />
+
+        <keys labels="Z|X|C|V" codes="54|52|31|50" splitter="|"/>
+
+        <!-- Space bar -->
+        <key icon="" cross_columns="2" />
+
+        <keys labels="B|N|M" codes="30|42|41" splitter="|"/>
+
+        <key label="." />
+    </row>
+</keyboard>
