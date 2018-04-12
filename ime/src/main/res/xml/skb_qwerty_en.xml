@@ -3,7 +3,7 @@
 
     <row>
         <!-- Switch to Chinese keyboard button -->
-        <key label="英/中" width="178px" text_color="@color/toggle_key_label"
+        <key label="英/中" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
 
         <keys labels="Q|W|E|R|T|Y|U|I|O|P" codes="45|51|33|46|48|53|49|37|43|44" splitter="|"/>
@@ -25,12 +25,12 @@
 
         <key label="," />
 
-        <key label="下一个" label_orientation="110px" stroke_color="@color/toggle_key_stroke"
-            normal_bg_color="@color/toggle_key_normal_bg" cross_row="2"/>
+        <key label="下一个" label_orientation="@integer/vertical" stroke_color="@color/toggle_key_stroke"
+            normal_bg_color="@color/toggle_key_normal_bg" text_size="24px" cross_row="2"/>
     </row>
 
     <row>
-        <key label="符" width="178px" text_color="@color/toggle_key_label"
+        <key label="符" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
 
         <!-- Case key -->

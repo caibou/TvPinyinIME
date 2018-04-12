@@ -54,4 +54,17 @@ public class XmlParseUtil {
         }
         return defValue;
     }
+
+    public static float loadDimen(Resources res, XmlResourceParser parser, String attr, float defValue){
+        int resId = parser.getAttributeResourceValue(null, attr, 0);
+        if (resId == 0){
+            String dimenStr = parser.getAttributeValue(null, attr);
+            if (!TextUtils.isEmpty(dimenStr)){
+                return Float.parseFloat(dimenStr);
+            }
+            return defValue;
+        } else {
+            return res.getDimension(resId);
+        }
+    }
 }

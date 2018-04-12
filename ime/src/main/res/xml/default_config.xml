@@ -5,13 +5,13 @@
         default_soft_key_label_color="@color/default_soft_key_label"
         default_soft_key_normal_bg_color="@color/default_soft_key_normal_bg"
         default_soft_key_stroke_color="@color/default_soft_key_stroke"
-        default_soft_key_selected_bg_color="@color/key_selected_bg"
+        default_soft_key_selected_bg_color="@color/default_key_selected_bg"
 
         default_soft_key_width="@dimen/default_soft_key_width"
         default_soft_key_height="@dimen/default_soft_key_height"
         default_soft_key_stroke_width="@dimen/default_soft_key_stroke_width"
         default_soft_key_icon_size="@dimen/default_soft_key_icon_size"
 
-        default_soft_keys_spacing="@dimen/soft_keys_spacing"
+        default_soft_keys_spacing="@dimen/default_soft_keys_spacing"
         />
 </configs>

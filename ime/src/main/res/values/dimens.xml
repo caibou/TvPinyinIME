@@ -4,6 +4,7 @@
     <dimen name="default_soft_key_height">80px</dimen>
     <dimen name="default_soft_key_stroke_width">2px</dimen>
     <dimen name="default_soft_key_icon_size">44px</dimen>
+    <dimen name="default_soft_key_text_size">24px</dimen>
     <dimen name="default_soft_keys_spacing">18px</dimen>
 
     <dimen name="soft_keyboard_height">436px</dimen>
@@ -14,4 +15,6 @@
     <dimen name="candidate_column_height">94px</dimen>
 
     <dimen name="keyboard_dividing_line_width">2px</dimen>
+
+    <dimen name="function_key_text_size">36px</dimen>
 </resources>

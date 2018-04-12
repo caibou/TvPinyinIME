@@ -9,10 +9,8 @@ import java.util.List;
 public class SoftKeyboard {
 
     private int backgroundColor;
-    private int keyTextColor, keyNormalColor, keyStrokeColor, keySelectedColor;
-    private int keyWidth, keyHeight, keyStrokeWidth, keyIconSize;
-    private int keysSpacing;
-
+    private float keysSpacing;
+    private boolean isUpperCase;
 
     private List<KeyRow> rows = new ArrayList<>();
 
@@ -36,83 +34,12 @@ public class SoftKeyboard {
         this.backgroundColor = backgroundColor;
     }
 
-    public int getKeyTextColor() {
-        return keyTextColor;
-    }
-
-    public void setKeyTextColor(int keyTextColor) {
-        this.keyTextColor = keyTextColor;
-    }
-
-    public int getKeyNormalColor() {
-        return keyNormalColor;
-    }
-
-    public void setKeyNormalColor(int keyNormalColor) {
-        this.keyNormalColor = keyNormalColor;
-    }
-
-    public int getKeyStrokeColor() {
-        return keyStrokeColor;
-    }
-
-    public void setKeyStrokeColor(int keyStrokeColor) {
-        this.keyStrokeColor = keyStrokeColor;
-    }
-
-    public int getKeySelectedColor() {
-        return keySelectedColor;
-    }
-
-    public void setKeySelectedColor(int keySelectedColor) {
-        this.keySelectedColor = keySelectedColor;
-    }
-
-    public int getKeyWidth() {
-        return keyWidth;
-    }
-
-    public void setKeyWidth(int keyWidth) {
-        this.keyWidth = keyWidth;
-    }
-
-    public int getKeyHeight() {
-        return keyHeight;
-    }
-
-    public void setKeyHeight(int keyHeight) {
-        this.keyHeight = keyHeight;
-    }
-
-    public int getKeyStrokeWidth() {
-        return keyStrokeWidth;
-    }
-
-    public void setKeyStrokeWidth(int keyStrokeWidth) {
-        this.keyStrokeWidth = keyStrokeWidth;
-    }
-
-    public int getKeyIconSize() {
-        return keyIconSize;
-    }
-
-    public void setKeyIconSize(int keyIconSize) {
-        this.keyIconSize = keyIconSize;
-    }
-
-    public int getKeysSpacing() {
+    public float getKeysSpacing() {
         return keysSpacing;
     }
 
-    public void setKeysSpacing(int keysSpacing) {
+    public void setKeysSpacing(float keysSpacing) {
         this.keysSpacing = keysSpacing;
     }
 
-    public List<KeyRow> getRows() {
-        return rows;
-    }
-
-    public void setRows(List<KeyRow> rows) {
-        this.rows = rows;
-    }
 }
