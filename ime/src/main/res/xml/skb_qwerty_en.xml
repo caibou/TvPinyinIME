@@ -4,19 +4,20 @@
     <row>
         <!-- Switch to Chinese keyboard button -->
         <key label="英/中" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
-            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
+            width="@dimen/big_key_width" />
 
         <keys labels="Q|W|E|R|T|Y|U|I|O|P" codes="45|51|33|46|48|53|49|37|43|44" splitter="|"/>
 
         <key label="@" />
 
         <!-- Delete button -->
-        <key icon="" width="110px" stroke_color="@color/toggle_key_stroke"
+        <key icon="" width="@dimen/middle_key_width" stroke_color="@color/toggle_key_stroke"
             normal_bg_color="@color/toggle_key_normal_bg"/>
     </row>
 
     <row>
-        <key label="123" width="178px" text_color="@color/toggle_key_label"
+        <key label="123" width="@dimen/big_key_width" text_color="@color/toggle_key_label"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
 
         <keys labels="A|S|D|F|G|H|J|K|L" codes="29|47|32|34|35|36|38|39|40" splitter="|"/>
@@ -26,12 +27,15 @@
         <key label="," />
 
         <key label="下一个" label_orientation="@integer/vertical" stroke_color="@color/toggle_key_stroke"
-            normal_bg_color="@color/toggle_key_normal_bg" text_size="24px" cross_row="2"/>
+            normal_bg_color="@color/toggle_key_normal_bg" text_size="24px" cross_row="2"
+            width="@dimen/middle_key_width" />
     </row>
 
     <row>
         <key label="符" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
-            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
+            width="@dimen/big_key_width"
+            />
 
         <!-- Case key -->
         <key icon="" />

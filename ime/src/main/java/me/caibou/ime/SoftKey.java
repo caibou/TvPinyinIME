@@ -15,6 +15,7 @@ public class SoftKey {
     private String keyLabel;
     private int textColor, normalColor, selectedColor, pressedColor, strokeColor;
     private float textSize, iconSize, strokeWidth;
+    private float left, top, right, bottom;
 
     private int crossRow, crossColumn;
     private int orientation = HORIZONTAL;
@@ -161,6 +162,38 @@ public class SoftKey {
 
     public void setOrientation(int orientation) {
         this.orientation = orientation;
+    }
+
+    public float getLeft() {
+        return left;
+    }
+
+    public void setLeft(float left) {
+        this.left = left;
+    }
+
+    public float getTop() {
+        return top;
+    }
+
+    public void setTop(float top) {
+        this.top = top;
+    }
+
+    public float getRight() {
+        return right;
+    }
+
+    public void setRight(float right) {
+        this.right = right;
+    }
+
+    public float getBottom() {
+        return bottom;
+    }
+
+    public void setBottom(float bottom) {
+        this.bottom = bottom;
     }
 
     @Override

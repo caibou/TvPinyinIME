@@ -2,7 +2,6 @@ package me.caibou.ime;
 
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.graphics.Color;
 import android.text.TextUtils;
 
 /**
@@ -10,29 +9,25 @@ import android.text.TextUtils;
  */
 public class XmlParseUtil {
 
+    public static final int NON_VALUE = Integer.MIN_VALUE;
+
     public static int loadInt(Resources res, XmlResourceParser parser, String attr, int defValue) {
-        int resId = parser.getAttributeResourceValue(null, attr, defValue);
-        if (resId == 0){
+        int resId = parser.getAttributeResourceValue(null, attr, NON_VALUE);
+        if (resId == NON_VALUE){
             String numStr = parser.getAttributeValue(null, attr);
             try {
                 return Integer.parseInt(numStr);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                return defValue;
             }
         } else {
-            return Integer.parseInt(res.getString(resId));
+            return res.getInteger(resId);
         }
-        return defValue;
     }
 
     public static int loadColor(Resources res, XmlResourceParser parser, String attr, int defValue) {
-        int resId = parser.getAttributeResourceValue(null, attr, defValue);
-        if (resId == 0){
-            String colorStr = parser.getAttributeValue(null, attr);
-            if (!TextUtils.isEmpty(colorStr) && colorStr.startsWith("#")){
-                return Color.parseColor(colorStr);
-            }
-        } else {
+        int resId = parser.getAttributeResourceValue(null, attr, NON_VALUE);
+        if (resId != NON_VALUE){
             return res.getColor(resId);
         }
         return defValue;
@@ -56,15 +51,10 @@ public class XmlParseUtil {
     }
 
     public static float loadDimen(Resources res, XmlResourceParser parser, String attr, float defValue){
-        int resId = parser.getAttributeResourceValue(null, attr, 0);
-        if (resId == 0){
-            String dimenStr = parser.getAttributeValue(null, attr);
-            if (!TextUtils.isEmpty(dimenStr)){
-                return Float.parseFloat(dimenStr);
-            }
-            return defValue;
-        } else {
+        int resId = parser.getAttributeResourceValue(null, attr, NON_VALUE);
+        if (resId != NON_VALUE){
             return res.getDimension(resId);
         }
+        return defValue;
     }
 }

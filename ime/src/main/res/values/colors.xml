@@ -7,7 +7,7 @@
     <color name="default_key_selected_bg">#0373dd</color>
 
     <color name="default_soft_key_label">#FFFFFF</color>
-    <color name="default_soft_key_normal_bg">#242c2c</color>
+    <color name="default_soft_key_normal_bg">#242c4c</color>
     <color name="default_soft_key_stroke">#FFFFFF</color>
 
     <color name="toggle_key_label">#F0F0F0</color>

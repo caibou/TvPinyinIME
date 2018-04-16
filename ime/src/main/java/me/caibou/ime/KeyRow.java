@@ -10,12 +10,16 @@ public class KeyRow {
 
     private List<SoftKey> keys = new ArrayList<>();
 
-    public List<SoftKey> getKeys() {
-        return keys;
+    public SoftKey getKey(int index) {
+        return keys.get(index);
     }
 
     public void addKey(SoftKey key) {
         keys.add(key);
+    }
+
+    public int keyCount() {
+        return keys.size();
     }
 
 }

@@ -5,13 +5,13 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 /**
  * @author caibou
@@ -47,7 +47,7 @@ public class KeyboardLoader {
     private static final String ATTR_ICON = "icon";
 
     private static final String ATTR_KEY_WIDTH = "width";
-    private static final String ATTR_KEY_HEIGHT = "width";
+    private static final String ATTR_KEY_HEIGHT = "height";
     private static final String ATTR_CROSS_ROW = "cross_row";
     private static final String ATTR_CROSS_COLUMNS = "cross_columns";
     private static final String ATTR_TEXT_COLOR = "text_color";
@@ -76,7 +76,6 @@ public class KeyboardLoader {
             while (event != XmlPullParser.END_DOCUMENT) {
                 if (event == XmlResourceParser.START_TAG) {
                     parseElementTag(xmlParser, softKeyboard);
-                    Log.i(TAG, "load: ");
                 }
                 event = xmlParser.next();
             }
@@ -111,35 +110,33 @@ public class KeyboardLoader {
 
     private void loadDefaultConfig(XmlResourceParser xmlParser) {
         defKeyTextColor = XmlParseUtil.loadColor(resources, xmlParser, ATTR_DEF_KEY_TEXT_COLOR,
-                R.color.default_soft_key_label);
+                resources.getColor(R.color.default_soft_key_label));
         defKeyNormalColor = XmlParseUtil.loadColor(resources, xmlParser, ATTR_DEF_KEY_NORMAL_COLOR,
-                R.color.default_soft_key_normal_bg);
+                resources.getColor(R.color.default_soft_key_normal_bg));
         defKeyStrokeColor = XmlParseUtil.loadColor(resources, xmlParser, ATTR_DEF_KEY_STROKE_COLOR,
-                R.color.default_soft_key_stroke);
+                resources.getColor(R.color.default_soft_key_stroke));
         defKeySelectedColor = XmlParseUtil.loadColor(resources, xmlParser, ATTR_DEF_KEY_SELECTED_COLOR,
-                R.color.default_key_selected_bg);
+                resources.getColor(R.color.default_key_selected_bg));
 
         defKeyWidth = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_WIDTH,
-                R.dimen.default_soft_key_width);
+                resources.getDimension(R.dimen.default_soft_key_width));
         defKeyHeight = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_HEIGHT,
-                R.dimen.default_soft_key_height);
+                resources.getDimension(R.dimen.default_soft_key_height));
         defKeyStrokeWidth = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_STROKE_WIDTH,
-                R.dimen.default_soft_key_stroke_width);
+                resources.getDimension(R.dimen.default_soft_key_stroke_width));
         defKeyIconSize = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_ICON_SIZE,
-                R.dimen.default_soft_key_icon_size);
+                resources.getDimension(R.dimen.default_soft_key_icon_size));
         defTextSize = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_KEY_TEXT_SIZE,
-                R.dimen.default_soft_key_text_size);
+                resources.getDimension(R.dimen.default_soft_key_text_size));
     }
 
     private void loadKeyboard(XmlResourceParser xmlParser, SoftKeyboard keyboard) {
-        keyboard = new SoftKeyboard();
         keyboard.setBackgroundColor(
                 XmlParseUtil.loadColor(resources, xmlParser, ATTR_KEYBOARD_BACKGROUND_COLOR,
                         R.color.keyboard_background_color));
         keyboard.setKeysSpacing(
                 XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEYS_SPACING,
-                        R.dimen.default_soft_keys_spacing));
-
+                        resources.getDimension(R.dimen.default_soft_keys_spacing)));
     }
 
     private void loadRow(@NonNull SoftKeyboard softKeyboard) {
@@ -148,12 +145,12 @@ public class KeyboardLoader {
     }
 
     private void loadKeys(XmlResourceParser xmlParser, SoftKeyboard softKeyboard) {
-        String splitter = XmlParseUtil.loadString(resources, xmlParser, ATTR_SPLITTER);
+        String splitter = Pattern.quote(XmlParseUtil.loadString(resources, xmlParser, ATTR_SPLITTER));
         if (!TextUtils.isEmpty(splitter)) {
             String[] keys = XmlParseUtil.loadString(resources, xmlParser, ATTR_CODES).split(splitter);
             String[] labels = XmlParseUtil.loadString(resources, xmlParser, ATTR_LABELS).split(splitter);
             for (int i = 0, size = keys.length; i < size; i++) {
-                SoftKey softKey = new SoftKey();
+                SoftKey softKey = getSoftKey(xmlParser);
                 softKey.setKeyLabel(labels[i]);
                 softKey.setKeyCode(Integer.parseInt(keys[i]));
                 softKeyboard.addSoftKey(softKey);

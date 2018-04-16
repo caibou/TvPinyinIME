@@ -26,6 +26,14 @@ public class SoftKeyboard {
         rows.add(keyRow);
     }
 
+    public KeyRow getRow(int rowIndex){
+        return rows.get(rowIndex);
+    }
+
+    public int getRowNum(){
+        return rows.size();
+    }
+
     public int getBackgroundColor() {
         return backgroundColor;
     }
