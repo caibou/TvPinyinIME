@@ -12,8 +12,8 @@
         <key label="@" />
 
         <!-- Delete button -->
-        <key icon="" width="@dimen/middle_key_width" stroke_color="@color/toggle_key_stroke"
-            normal_bg_color="@color/toggle_key_normal_bg"/>
+        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width"
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
     </row>
 
     <row>
@@ -32,18 +32,18 @@
     </row>
 
     <row>
-        <key label="符" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
+        <key label="符" text_size="@dimen/function_key_text_size" width="@dimen/big_key_width"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
-            width="@dimen/big_key_width"
-            />
+            text_color="@color/toggle_key_label" />
 
         <!-- Case key -->
-        <key icon="" />
+        <key icon="@drawable/ic_lower_case" />
 
         <keys labels="Z|X|C|V" codes="54|52|31|50" splitter="|"/>
 
         <!-- Space bar -->
-        <key icon="" cross_columns="2" />
+        <key icon="@drawable/ic_long_space_key" cross_columns="2"
+            icon_width="@dimen/space_icon_width" icon_height="@dimen/space_icon_height"/>
 
         <keys labels="B|N|M" codes="30|42|41" splitter="|"/>
 

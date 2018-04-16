@@ -51,7 +51,8 @@ public class KeyboardLoader {
     private static final String ATTR_CROSS_ROW = "cross_row";
     private static final String ATTR_CROSS_COLUMNS = "cross_columns";
     private static final String ATTR_TEXT_COLOR = "text_color";
-    private static final String ATTR_ICON_SIZE = "icon_size";
+    private static final String ATTR_ICON_WIDTH = "icon_width";
+    private static final String ATTR_ICON_HEIGHT = "icon_height";
     private static final String ATTR_STROKE_COLOR = "stroke_color";
     private static final String ATTR_STROKE_WIDTH = "stroke_width";
     private static final String ATTR_NORMAL_BG_COLOR = "normal_bg_color";
@@ -182,8 +183,10 @@ public class KeyboardLoader {
                 resources, xmlParser, ATTR_CROSS_COLUMNS, 1));
         softKey.setCrossRow(XmlParseUtil.loadInt(
                 resources, xmlParser, ATTR_CROSS_ROW, 1));
-        softKey.setIconSize(XmlParseUtil.loadDimen(
-                resources, xmlParser, ATTR_ICON_SIZE, defKeyIconSize));
+        softKey.setIconWidth(XmlParseUtil.loadDimen(
+                resources, xmlParser, ATTR_ICON_WIDTH, defKeyIconSize));
+        softKey.setIconHeight(XmlParseUtil.loadDimen(
+                resources, xmlParser, ATTR_ICON_HEIGHT, defKeyIconSize));
         softKey.setNormalColor(XmlParseUtil.loadColor(
                 resources, xmlParser, ATTR_NORMAL_BG_COLOR, defKeyNormalColor));
         softKey.setPressedColor(XmlParseUtil.loadColor(
@@ -196,6 +199,8 @@ public class KeyboardLoader {
                 resources, xmlParser, ATTR_STROKE_WIDTH, defKeyStrokeWidth));
         softKey.setOrientation(XmlParseUtil.loadInt(
                 resources, xmlParser, ATTR_LABEL_ORIENTATION, SoftKey.HORIZONTAL));
+        softKey.setIcon(XmlParseUtil.loadDrawable(
+                resources, xmlParser, ATTR_ICON));
         return softKey;
     }
 

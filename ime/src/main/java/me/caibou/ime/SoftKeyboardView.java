@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -58,10 +59,10 @@ public class SoftKeyboardView extends View {
 
         canvas.drawColor(getResources().getColor(softKeyboard.getBackgroundColor()));
 
-        for (int rowIndex = 0, rowNum = softKeyboard.getRowNum(); rowIndex < rowNum; rowIndex++){
+        for (int rowIndex = 0, rowNum = softKeyboard.getRowNum(); rowIndex < rowNum; rowIndex++) {
 
             KeyRow keyRow = softKeyboard.getRow(rowIndex);
-            for (int keyIndex = 0, size = keyRow.keyCount(); keyIndex < size; keyIndex++){
+            for (int keyIndex = 0, size = keyRow.keyCount(); keyIndex < size; keyIndex++) {
                 SoftKey softKey = keyRow.getKey(keyIndex);
                 drawSoftKey(canvas, softKey);
             }
@@ -75,8 +76,8 @@ public class SoftKeyboardView extends View {
         int crossRow = softKey.getCrossRow();
         int crossColumn = softKey.getCrossColumn();
         float spacing = softKeyboard.getKeysSpacing();
-        float width = softKey.getWidth() * crossColumn +  spacing * ( crossColumn - 1);
-        float height = softKey.getHeight() * crossRow + spacing * ( crossRow - 1);
+        float width = softKey.getWidth() * crossColumn + spacing * (crossColumn - 1);
+        float height = softKey.getHeight() * crossRow + spacing * (crossRow - 1);
         rectF.set(currentLeft, currentTop, currentLeft + width, currentTop + height);
 
         paint.reset();
@@ -92,7 +93,17 @@ public class SoftKeyboardView extends View {
         paint.setColor(softKey.getStrokeColor());
         canvas.drawRect(rectF, paint);
 
-        if (!TextUtils.isEmpty(softKey.getKeyLabel())){
+        if (softKey.getIcon() != null){
+            Drawable icon = softKey.getIcon();
+            int left = (int) (rectF.centerX() - softKey.getIconWidth() / 2);
+            int top = (int) (rectF.centerY() - softKey.getIconHeight() / 2);
+            int right = (int) (left + softKey.getIconWidth());
+            int bottom = (int) (top + softKey.getIconHeight());
+            icon.setBounds(left, top, right, bottom);
+            icon.draw(canvas);
+        }
+
+        if (!TextUtils.isEmpty(softKey.getKeyLabel())) {
             String label = softKey.getKeyLabel();
             paint.reset();
             paint.setColor(softKey.getTextColor());
@@ -104,9 +115,9 @@ public class SoftKeyboardView extends View {
             Rect bound = new Rect();
             paint.getTextBounds(label, 0, label.length(), bound);
 
-            float x = rectF.centerX() - bound.width()/2 ;
-            float y = rectF.centerY() + bound.height()/2;
-            canvas.drawText(label, x,  y, paint);
+            float x = rectF.centerX() - bound.width() / 2;
+            float y = rectF.centerY() + bound.height() / 2;
+            canvas.drawText(label, x, y, paint);
         }
 
 

@@ -1,5 +1,7 @@
 package me.caibou.ime;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * @author caibou
  */
@@ -14,12 +16,14 @@ public class SoftKey {
     private int keyCode;
     private String keyLabel;
     private int textColor, normalColor, selectedColor, pressedColor, strokeColor;
-    private float textSize, iconSize, strokeWidth;
+    private float textSize, iconWidth, iconHeight, strokeWidth;
     private float left, top, right, bottom;
 
     private int crossRow, crossColumn;
     private int orientation = HORIZONTAL;
     private float width, height;
+
+    private Drawable icon;
 
     private boolean selected;
     private boolean pressed;
@@ -148,12 +152,12 @@ public class SoftKey {
         this.strokeWidth = strokeWidth;
     }
 
-    public float getIconSize() {
-        return iconSize;
+    public float getIconWidth() {
+        return iconWidth;
     }
 
-    public void setIconSize(float iconSize) {
-        this.iconSize = iconSize;
+    public void setIconWidth(float iconWidth) {
+        this.iconWidth = iconWidth;
     }
 
     public int getOrientation() {
@@ -194,6 +198,22 @@ public class SoftKey {
 
     public void setBottom(float bottom) {
         this.bottom = bottom;
+    }
+
+    public float getIconHeight() {
+        return iconHeight;
+    }
+
+    public void setIconHeight(float iconHeight) {
+        this.iconHeight = iconHeight;
+    }
+
+    public Drawable getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Drawable icon) {
+        this.icon = icon;
     }
 
     @Override

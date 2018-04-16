@@ -2,6 +2,7 @@ package me.caibou.ime;
 
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
 /**
@@ -56,5 +57,13 @@ public class XmlParseUtil {
             return res.getDimension(resId);
         }
         return defValue;
+    }
+
+    public static Drawable loadDrawable(Resources res, XmlResourceParser parser, String attr){
+        int resId = parser.getAttributeResourceValue(null, attr, NON_VALUE);
+        if (resId != NON_VALUE){
+            return res.getDrawable(resId);
+        }
+        return null;
     }
 }
