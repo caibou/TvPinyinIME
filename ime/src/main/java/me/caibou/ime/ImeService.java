@@ -1,6 +1,7 @@
 package me.caibou.ime;
 
 import android.inputmethodservice.InputMethodService;
+import android.view.LayoutInflater;
 import android.view.View;
 
 /**
@@ -10,12 +11,21 @@ public class ImeService extends InputMethodService {
 
     private static final String TAG = "ImeService";
 
+    private SkbContainer skbContainer;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        MeasureData.measure(getApplicationContext());
+    }
+
     @Override
     public View onCreateInputView() {
-        SoftKeyboardView softKeyboardView = new SoftKeyboardView(getApplicationContext());
-        KeyboardLoader loader = new KeyboardLoader(getApplicationContext());
-        softKeyboardView.setSoftKeyboard(loader.load(R.xml.skb_qwerty_en));
-        return softKeyboardView;
+        LayoutInflater inflater = getLayoutInflater();
+        skbContainer = (SkbContainer) inflater.inflate(R.layout.layout_skb_container, null);
+        SoftKeyboardView softKeyboardView = skbContainer.findViewById(R.id.keyboard_view);
+        softKeyboardView.setSoftKeyboard(new KeyboardLoader(getApplicationContext()).load(R.xml.skb_qwerty_en));
+        return skbContainer;
     }
 
     @Override

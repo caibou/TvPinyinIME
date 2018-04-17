@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import me.caibou.ime.pattern.SoftKey;
+
 /**
  * 软键盘View，主要是根据{@link SoftKeyboard}的信息绘制软键盘
  *
@@ -26,7 +28,7 @@ public class SoftKeyboardView extends View {
     private Paint paint;
     private RectF rectF;
 
-    float currentTop = 124, currentLeft = 213;
+    private float currentTop, currentLeft;
 
     public SoftKeyboardView(Context context) {
         this(context, null);
@@ -57,6 +59,9 @@ public class SoftKeyboardView extends View {
         }
 
         canvas.drawColor(getResources().getColor(softKeyboard.getBackgroundColor()));
+
+        currentTop = 124;
+        currentLeft = 213;
 
         for (int rowIndex = 0, rowNum = softKeyboard.getRowNum(); rowIndex < rowNum; rowIndex++) {
 
@@ -121,11 +126,7 @@ public class SoftKeyboardView extends View {
 
 
         currentLeft = currentLeft + width + spacing;
-        
+
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(1920, 436);
-    }
 }

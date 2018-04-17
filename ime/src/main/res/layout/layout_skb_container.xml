@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.caibou.ime.SkbContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <me.caibou.ime.SoftKeyboardView
+        android:id="@+id/keyboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <me.caibou.ime.CandidatesView
+        android:id="@+id/keyboard_candidate_view"
+        android:layout_width="match_parent"
+        android:layout_height="94px"
+        android:background="@color/colorAccent" />
+
+</me.caibou.ime.SkbContainer>

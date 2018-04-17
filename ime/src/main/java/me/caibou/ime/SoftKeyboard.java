@@ -3,6 +3,8 @@ package me.caibou.ime;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.caibou.ime.pattern.SoftKey;
+
 /**
  * @author caibou
  */
