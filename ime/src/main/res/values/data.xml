@@ -3,4 +3,6 @@
     <integer name="horizontal">1</integer>
     <integer name="vertical">2</integer>
 
+    <integer name="key_type_symbol">10</integer>
+    <integer name="key_type_keyboard_switch">11</integer>
 </resources>

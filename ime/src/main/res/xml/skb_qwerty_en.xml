@@ -7,9 +7,7 @@
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
             width="@dimen/big_key_width" />
 
-        <keys labels="Q|W|E|R|T|Y|U|I|O|P" codes="45|51|33|46|48|53|49|37|43|44" splitter="|"/>
-
-        <key label="@" />
+        <keys labels="q|w|e|r|t|y|u|i|o|p|@" codes="45|51|33|46|48|53|49|37|43|44|77" splitter="|"/>
 
         <!-- Delete button -->
         <key icon="@drawable/ic_delete" width="@dimen/middle_key_width"
@@ -20,11 +18,11 @@
         <key label="123" width="@dimen/big_key_width" text_color="@color/toggle_key_label"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
 
-        <keys labels="A|S|D|F|G|H|J|K|L" codes="29|47|32|34|35|36|38|39|40" splitter="|"/>
+        <keys labels="a|s|d|f|g|h|j|k|l" codes="29|47|32|34|35|36|38|39|40" splitter="|"/>
 
         <key label="?" />
 
-        <key label="," />
+        <key label="," keycode="55"/>
 
         <key label="下一个" label_orientation="@integer/vertical" stroke_color="@color/toggle_key_stroke"
             normal_bg_color="@color/toggle_key_normal_bg" text_size="24px" cross_row="2"
@@ -37,16 +35,15 @@
             text_color="@color/toggle_key_label" />
 
         <!-- Case key -->
-        <key icon="@drawable/ic_lower_case" />
+        <key icon="@drawable/ic_lower_case" keycode="115"/>
 
-        <keys labels="Z|X|C|V" codes="54|52|31|50" splitter="|"/>
+        <keys labels="z|x|c|v" codes="54|52|31|50" splitter="|"/>
 
         <!-- Space bar -->
-        <key icon="@drawable/ic_long_space_key" cross_columns="2"
+        <key icon="@drawable/ic_long_space_key" cross_columns="2" keycode="62"
             icon_width="@dimen/space_icon_width" icon_height="@dimen/space_icon_height"/>
 
-        <keys labels="B|N|M" codes="30|42|41" splitter="|"/>
+        <keys labels="b|n|m|." codes="30|42|41|56" splitter="|"/>
 
-        <key label="." />
     </row>
 </keyboard>
