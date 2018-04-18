@@ -7,4 +7,11 @@
     <integer name="key_type_symbol">11</integer>
     <integer name="key_type_keyboard_switch">12</integer>
     <integer name="key_type_toggle">13</integer>
+
+    <!-- Customer key code range -200 ~ -100 -->
+    <integer name="key_code_switch_to_cn_all">-100</integer>
+    <integer name="key_code_switch_to_en">-101</integer>
+    <integer name="key_code_switch_to_cn_t9">-102</integer>
+    <integer name="key_code_switch_to_number">-103</integer>
+    <integer name="key_code_candidate_symbol">-104</integer>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard >
+<keyboard default_position_x="@dimen/px_213" default_position_y="@dimen/px_124">
 
-    <row>
+    <row margin_top="" >
         <!-- Switch to Chinese keyboard button -->
         <key label="英/中" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"

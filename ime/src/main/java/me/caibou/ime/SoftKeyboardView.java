@@ -28,8 +28,6 @@ public class SoftKeyboardView extends View {
     private Paint paint;
     private RectF rectF;
 
-    private float currentTop, currentLeft;
-
     public SoftKeyboardView(Context context) {
         this(context, null);
     }
@@ -60,9 +58,6 @@ public class SoftKeyboardView extends View {
 
         canvas.drawColor(getResources().getColor(softKeyboard.getBackgroundColor()));
 
-        currentTop = 124;
-        currentLeft = 213;
-
         for (int rowIndex = 0, rowNum = softKeyboard.getRowNum(); rowIndex < rowNum; rowIndex++) {
 
             KeyRow keyRow = softKeyboard.getRow(rowIndex);
@@ -70,19 +65,12 @@ public class SoftKeyboardView extends View {
                 SoftKey softKey = keyRow.getKey(keyIndex);
                 drawSoftKey(canvas, softKey);
             }
-            currentTop += 98;
-            currentLeft = 213;
         }
     }
 
     private void drawSoftKey(Canvas canvas, SoftKey softKey) {
 
-        int crossRow = softKey.getCrossRow();
-        int crossColumn = softKey.getCrossColumn();
-        float spacing = softKeyboard.getKeysSpacing();
-        float width = softKey.getWidth() * crossColumn + spacing * (crossColumn - 1);
-        float height = softKey.getHeight() * crossRow + spacing * (crossRow - 1);
-        rectF.set(currentLeft, currentTop, currentLeft + width, currentTop + height);
+        rectF.set(softKey.getLeft(), softKey.getTop(), softKey.getRight(), softKey.getBottom());
 
         paint.reset();
         paint.setStyle(Paint.Style.FILL);
@@ -123,9 +111,6 @@ public class SoftKeyboardView extends View {
             float y = rectF.centerY() + bound.height() / 2;
             canvas.drawText(label, x, y, paint);
         }
-
-
-        currentLeft = currentLeft + width + spacing;
 
     }
 

@@ -3,7 +3,7 @@ package me.caibou.ime.pattern;
 /**
  * @author caibou
  */
-public class Pattern {
+public class Element {
 
     private float left, top, right, bottom;
     private float width, height;
@@ -14,6 +14,7 @@ public class Pattern {
 
     public void setWidth(float width) {
         this.width = width;
+        fixRange();
     }
 
     public float getHeight() {
@@ -22,6 +23,7 @@ public class Pattern {
 
     public void setHeight(float height) {
         this.height = height;
+        fixRange();
     }
 
     public float getLeft() {
@@ -30,6 +32,7 @@ public class Pattern {
 
     public void setLeft(float left) {
         this.left = left;
+        fixRange();
     }
 
     public float getTop() {
@@ -38,6 +41,7 @@ public class Pattern {
 
     public void setTop(float top) {
         this.top = top;
+        fixRange();
     }
 
     public float getRight() {
@@ -54,6 +58,11 @@ public class Pattern {
 
     public void setBottom(float bottom) {
         this.bottom = bottom;
+    }
+
+    public void fixRange() {
+        right = left + width;
+        bottom = top + height;
     }
 
 }

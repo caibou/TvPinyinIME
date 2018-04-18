@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 /**
  * @author caibou
  */
-public class SoftKey extends Pattern {
+public class SoftKey extends Element {
 
     private static final int CUSTOMIZE_KEYCODE_START = -200;
     private static final int CUSTOMIZE_KEYCODE_END = -100;

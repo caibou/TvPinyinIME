@@ -13,6 +13,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+import me.caibou.ime.pattern.Element;
 import me.caibou.ime.pattern.SoftKey;
 
 /**
@@ -39,6 +40,8 @@ public class KeyboardLoader {
     private static final String ATTR_DEF_KEY_ICON_SIZE = "default_soft_key_icon_size";
 
     private static final String ATTR_DEF_KEYS_SPACING = "default_soft_keys_spacing";
+    private static final String ATTR_DEF_POS_X = "default_position_x";
+    private static final String ATTR_DEF_POS_Y = "default_position_y";
 
     private static final String ATTR_LABEL = "label";
     private static final String ATTR_LABELS = "labels";
@@ -48,8 +51,11 @@ public class KeyboardLoader {
     private static final String ATTR_KEY_TEXT_SIZE = "text_size";
     private static final String ATTR_ICON = "icon";
 
-    private static final String ATTR_KEY_WIDTH = "width";
-    private static final String ATTR_KEY_HEIGHT = "height";
+    private static final String ATTR_WIDTH = "width";
+    private static final String ATTR_HEIGHT = "height";
+    private static final String ATTR_POS_X = "pos_x";
+    private static final String ATTR_POS_Y = "pos_y";
+
     private static final String ATTR_CROSS_ROW = "cross_row";
     private static final String ATTR_CROSS_COLUMNS = "cross_columns";
     private static final String ATTR_TEXT_COLOR = "text_color";
@@ -64,8 +70,10 @@ public class KeyboardLoader {
 
     private Resources resources;
     private int defKeyTextColor, defKeyNormalColor, defKeyStrokeColor, defKeySelectedColor;
-    private float defKeyWidth, defKeyHeight, defKeyStrokeWidth, defKeyIconSize;
-    private float defTextSize;
+    private float defKeyStrokeWidth, defKeyIconSize, defTextSize;
+    private float defKeyWidth, defKeyHeight, defPosX, defPosY, defKeySpacing;
+
+    private float nextPosX, nextPosY;
 
     public KeyboardLoader(@NonNull Context context) {
         resources = context.getResources();
@@ -78,7 +86,9 @@ public class KeyboardLoader {
             int event = xmlParser.next();
             while (event != XmlPullParser.END_DOCUMENT) {
                 if (event == XmlResourceParser.START_TAG) {
-                    parseElementTag(xmlParser, softKeyboard);
+                    parseElementStartTag(xmlParser, softKeyboard);
+                } else if (event == XmlResourceParser.END_TAG){
+                    parseElementEndTag(xmlParser, softKeyboard);
                 }
                 event = xmlParser.next();
             }
@@ -92,12 +102,24 @@ public class KeyboardLoader {
         return softKeyboard;
     }
 
-    private void parseElementTag(XmlResourceParser xmlParser, @NonNull SoftKeyboard softKeyboard) {
+    private void parseElementEndTag(XmlResourceParser xmlParser, SoftKeyboard softKeyboard) {
+        String attr = xmlParser.getName().toLowerCase();
+        switch (attr) {
+            case TAG_ROW:
+                nextPosX = defPosX;
+                nextPosY += (defKeySpacing + 80);
+                break;
+        }
+    }
+
+    private void parseElementStartTag(XmlResourceParser xmlParser, @NonNull SoftKeyboard softKeyboard) {
         String attr = xmlParser.getName().toLowerCase();
         switch (attr) {
             case TAG_KEYBOARD:
                 loadDefaultConfig(xmlParser);
                 loadKeyboard(xmlParser, softKeyboard);
+                nextPosX = defPosX;
+                nextPosY = defPosY;
                 break;
             case TAG_ROW:
                 loadRow(softKeyboard);
@@ -125,6 +147,10 @@ public class KeyboardLoader {
                 resources.getDimension(R.dimen.default_soft_key_width));
         defKeyHeight = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_HEIGHT,
                 resources.getDimension(R.dimen.default_soft_key_height));
+        defPosX = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_POS_X,
+                resources.getDimension(R.dimen.default_soft_key_height));
+        defPosY = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_POS_Y,
+                resources.getDimension(R.dimen.default_soft_key_height));
         defKeyStrokeWidth = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_STROKE_WIDTH,
                 resources.getDimension(R.dimen.default_soft_key_stroke_width));
         defKeyIconSize = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_ICON_SIZE,
@@ -137,9 +163,11 @@ public class KeyboardLoader {
         keyboard.setBackgroundColor(
                 XmlParseUtil.loadColor(resources, xmlParser, ATTR_KEYBOARD_BACKGROUND_COLOR,
                         R.color.keyboard_background_color));
-        keyboard.setKeysSpacing(
-                XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEYS_SPACING,
-                        resources.getDimension(R.dimen.default_soft_keys_spacing)));
+
+        defKeySpacing = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEYS_SPACING,
+                resources.getDimension(R.dimen.default_soft_keys_spacing));
+
+        keyboard.setKeysSpacing(defKeySpacing);
     }
 
     private void loadRow(@NonNull SoftKeyboard softKeyboard) {
@@ -166,6 +194,18 @@ public class KeyboardLoader {
         softKeyboard.addSoftKey(softKey);
     }
 
+    private void loadPattern(Element element, XmlResourceParser xmlParser) {
+        float width = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_WIDTH, defKeyWidth);
+        float height = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_HEIGHT, defKeyHeight);
+        float left = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_POS_X, nextPosX);
+        float top = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_POS_Y, nextPosY);
+
+        element.setWidth(width);
+        element.setHeight(height);
+        element.setLeft(left);
+        element.setTop(top);
+    }
+
     @NonNull
     private SoftKey getSoftKey(XmlResourceParser xmlParser) {
         SoftKey softKey = new SoftKey();
@@ -177,10 +217,6 @@ public class KeyboardLoader {
                 resources, xmlParser, ATTR_KEY_TEXT_SIZE, defTextSize));
         softKey.setKeyLabel(XmlParseUtil.loadString(
                 resources, xmlParser, ATTR_LABEL));
-        softKey.setWidth(XmlParseUtil.loadDimen(
-                resources, xmlParser, ATTR_KEY_WIDTH, defKeyWidth));
-        softKey.setHeight(XmlParseUtil.loadDimen(
-                resources, xmlParser, ATTR_KEY_HEIGHT, defKeyHeight));
         softKey.setCrossColumn(XmlParseUtil.loadInt(
                 resources, xmlParser, ATTR_CROSS_COLUMNS, 1));
         softKey.setCrossRow(XmlParseUtil.loadInt(
@@ -203,7 +239,23 @@ public class KeyboardLoader {
                 resources, xmlParser, ATTR_LABEL_ORIENTATION, SoftKey.HORIZONTAL));
         softKey.setIcon(XmlParseUtil.loadDrawable(
                 resources, xmlParser, ATTR_ICON));
+        loadPattern(softKey, xmlParser);
+        fixKeyRect(softKey);
+        calNextPosX(softKey);
         return softKey;
+    }
+
+    private void calNextPosX(Element element) {
+        nextPosX = element.getRight() + defKeySpacing;
+    }
+
+    private void fixKeyRect(SoftKey softKey) {
+        int crossRow = softKey.getCrossRow();
+        int crossColumn = softKey.getCrossColumn();
+        float width = softKey.getWidth() * crossColumn + defKeySpacing * (crossColumn - 1);
+        float height = softKey.getHeight() * crossRow + defKeySpacing * (crossRow - 1);
+        softKey.setWidth(width);
+        softKey.setHeight(height);
     }
 
 }

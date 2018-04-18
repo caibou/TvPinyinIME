@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 /**
  * @author caibou
  */
-public class Picture extends Pattern {
+public class Picture extends Element {
 
     private Drawable src;
 
