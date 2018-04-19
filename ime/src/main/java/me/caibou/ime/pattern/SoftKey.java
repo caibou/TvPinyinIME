@@ -28,7 +28,7 @@ public class SoftKey extends Element {
     private boolean pressed;
 
     public boolean isCustomizeKey() {
-        return CUSTOMIZE_KEYCODE_START < keyCode && keyCode < CUSTOMIZE_KEYCODE_END;
+        return CUSTOMIZE_KEYCODE_START <= keyCode && keyCode <= CUSTOMIZE_KEYCODE_END;
     }
 
     public int getKeyCode() {

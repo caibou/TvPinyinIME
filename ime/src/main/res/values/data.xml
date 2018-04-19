@@ -11,4 +11,5 @@
     <integer name="key_code_candidate_symbol">-104</integer>
     <integer name="key_code_commit_label">-105</integer>
     <integer name="key_code_compose_words">-106</integer>
+    <integer name="key_code_case_switch">-107</integer>
 </resources>

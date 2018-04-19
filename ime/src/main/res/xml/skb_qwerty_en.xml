@@ -3,20 +3,21 @@
 
     <row margin_top="" >
         <!-- Switch to Chinese keyboard button -->
-        <key label="英/中" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
+        <key label="英/中" text_size="@dimen/function_key_text_size" width="@dimen/big_key_width"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
-            width="@dimen/big_key_width" />
+            keycode="@integer/key_code_switch_to_cn_all" text_color="@color/toggle_key_label" />
 
         <keys labels="q|w|e|r|t|y|u|i|o|p|@" codes="45|51|33|46|48|53|49|37|43|44|77" splitter="|"/>
 
         <!-- Delete button -->
-        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width" keycode="112"
+        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width" keycode="67"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
     </row>
 
     <row>
         <key label="123" width="@dimen/big_key_width" text_color="@color/toggle_key_label"
-            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
+            keycode="@integer/key_code_switch_to_number" />
 
         <keys labels="a|s|d|f|g|h|j|k|l" codes="29|47|32|34|35|36|38|39|40" splitter="|"/>
 
@@ -24,18 +25,18 @@
 
         <key label="," keycode="55"/>
 
-        <key label="下一个" label_orientation="@integer/vertical" stroke_color="@color/toggle_key_stroke"
-            normal_bg_color="@color/toggle_key_normal_bg" text_size="24px" cross_row="2"
-            width="@dimen/middle_key_width" />
+        <key label="下一个" label_orientation="@integer/vertical" cross_row="2"
+            normal_bg_color="@color/toggle_key_normal_bg" text_size="24px"
+            width="@dimen/middle_key_width" stroke_color="@color/toggle_key_stroke"/>
     </row>
 
     <row>
         <key label="符" text_size="@dimen/function_key_text_size" width="@dimen/big_key_width"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
-            text_color="@color/toggle_key_label" />
+            text_color="@color/toggle_key_label" keycode="@integer/key_code_candidate_symbol"/>
 
         <!-- Case key -->
-        <key icon="@drawable/ic_lower_case" keycode="115"/>
+        <key icon="@drawable/ic_lower_case" keycode="@integer/key_code_case_switch"/>
 
         <keys labels="z|x|c|v" codes="54|52|31|50" splitter="|"/>
 

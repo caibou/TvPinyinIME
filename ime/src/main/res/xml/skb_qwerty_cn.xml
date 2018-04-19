@@ -2,41 +2,41 @@
 <keyboard default_position_x="@dimen/px_159" default_position_y="@dimen/px_124">
 
     <row margin_top="" >
-        <!-- Switch to Chinese keyboard button -->
+        <!-- Switch to English keyboard button -->
         <key label="英/中" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
-            width="@dimen/big_key_width" />
+            width="@dimen/big_key_width" keycode="@integer/key_code_switch_to_en"/>
 
         <keys labels="q|w|e" codes="45|51|33" splitter="|"/>
 
-        <key label="eng" />
+        <key label="eng" keycode="@integer/key_code_compose_words" />
 
         <keys labels="r|t|y|u" codes="46|48|53|49" splitter="|"/>
 
-        <key label="ing" />
+        <key label="ing" keycode="@integer/key_code_compose_words" />
 
         <keys labels="i|o|p" codes="37|43|44" splitter="|"/>
 
         <!-- Delete button -->
-        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width" keycode="112"
+        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width" keycode="67"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
     </row>
 
     <row>
-        <key label="123" width="@dimen/big_key_width" text_color="@color/toggle_key_label"
+        <key label="123" width="@dimen/big_key_width" text_color="@color/toggle_key_label" keycode="-103"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
 
         <key label="a" keycode="29"/>
 
-        <key label="ang" />
+        <key label="ang" keycode="@integer/key_code_compose_words" />
 
         <key label="s" keycode="47"/>
 
-        <key label="sh" />
+        <key label="sh" keycode="@integer/key_code_compose_words" />
 
         <keys labels="d|f|g|h|j|k" codes="32|34|35|36|38|39" splitter="|"/>
 
-        <key label="ong" />
+        <key label="ong" keycode="@integer/key_code_compose_words" />
 
         <key label="l" keycode="40"/>
 
@@ -48,15 +48,15 @@
     <row>
         <key label="符" text_size="@dimen/function_key_text_size" width="@dimen/big_key_width"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
-            text_color="@color/toggle_key_label" />
+            text_color="@color/toggle_key_label" keycode="@integer/key_code_candidate_symbol"/>
 
         <key label="z" keycode="54"/>
 
-        <key label="zh"/>
+        <key label="zh" keycode="@integer/key_code_compose_words" />
 
         <keys labels="x|c" codes="52|31" splitter="|"/>
 
-        <key label="ch"/>
+        <key label="ch" keycode="@integer/key_code_compose_words" />
 
         <key label="v" keycode="50"/>
 
@@ -66,7 +66,7 @@
 
         <keys labels="b|n|m|" codes="30|42|41" splitter="|"/>
 
-        <key label="，" keycode="55"/>
+        <key label="，" keycode="@integer/key_code_commit_label"/>
 
         <key label="。" keycode="@integer/key_code_commit_label"/>
 

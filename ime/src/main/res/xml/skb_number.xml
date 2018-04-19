@@ -5,12 +5,12 @@
         <!-- Switch to Chinese keyboard button -->
         <key label="英/中" text_size="@dimen/function_key_text_size" width="@dimen/big_key_width"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
-            text_color="@color/toggle_key_label"/>
+            text_color="@color/toggle_key_label" keycode="@integer/key_code_switch_to_en" />
 
         <keys labels="1|2|3|." codes="8|9|10|56" width="@dimen/big_key_width" splitter="|"/>
 
         <!-- Delete button -->
-        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width" keycode="112"
+        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width" keycode="67"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
     </row>
 
