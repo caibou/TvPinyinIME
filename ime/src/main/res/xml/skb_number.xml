@@ -10,7 +10,7 @@
         <keys labels="1|2|3|." codes="8|9|10|56" width="@dimen/big_key_width" splitter="|"/>
 
         <!-- Delete button -->
-        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width"
+        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width" keycode="112"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
     </row>
 

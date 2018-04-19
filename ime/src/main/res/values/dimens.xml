@@ -20,10 +20,12 @@
     <dimen name="big_key_width">178px</dimen>
     <dimen name="middle_key_width">110px</dimen>
 
-    <dimen name="space_icon_width">80px</dimen>
+    <dimen name="space_long_icon_width">80px</dimen>
+    <dimen name="space_short_icon_width">48px</dimen>
     <dimen name="space_icon_height">20px</dimen>
 
     <dimen name="px_213">213px</dimen>
     <dimen name="px_124">124px</dimen>
     <dimen name="px_415">415px</dimen>
+    <dimen name="px_159">159px</dimen>
 </resources>

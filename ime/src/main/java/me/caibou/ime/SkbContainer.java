@@ -85,7 +85,7 @@ public class SkbContainer extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         keyboardView = findViewById(R.id.keyboard_view);
-        softKeyboard = new KeyboardLoader(getContext()).load(R.xml.skb_number);
+        softKeyboard = new KeyboardLoader(getContext()).load(R.xml.skb_qwerty_cn);
         keyboardView.setSoftKeyboard(softKeyboard);
     }
 

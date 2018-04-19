@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard default_position_x="@dimen/px_213" default_position_y="@dimen/px_124">
+<keyboard default_position_x="@dimen/px_159" default_position_y="@dimen/px_124">
 
     <row margin_top="" >
         <!-- Switch to Chinese keyboard button -->
@@ -7,7 +7,15 @@
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
             width="@dimen/big_key_width" />
 
-        <keys labels="q|w|e|r|t|y|u|i|o|p|@" codes="45|51|33|46|48|53|49|37|43|44|77" splitter="|"/>
+        <keys labels="q|w|e" codes="45|51|33" splitter="|"/>
+
+        <key label="eng" />
+
+        <keys labels="r|t|y|u" codes="46|48|53|49" splitter="|"/>
+
+        <key label="ing" />
+
+        <keys labels="i|o|p" codes="37|43|44" splitter="|"/>
 
         <!-- Delete button -->
         <key icon="@drawable/ic_delete" width="@dimen/middle_key_width" keycode="112"
@@ -18,11 +26,19 @@
         <key label="123" width="@dimen/big_key_width" text_color="@color/toggle_key_label"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
 
-        <keys labels="a|s|d|f|g|h|j|k|l" codes="29|47|32|34|35|36|38|39|40" splitter="|"/>
+        <key label="a" keycode="29"/>
 
-        <key label="?" keycode="@integer/key_code_commit_label"/>
+        <key label="ang" />
 
-        <key label="," keycode="55"/>
+        <key label="s" keycode="47"/>
+
+        <key label="sh" />
+
+        <keys labels="d|f|g|h|j|k" codes="32|34|35|36|38|39" splitter="|"/>
+
+        <key label="ong" />
+
+        <key label="l" keycode="40"/>
 
         <key label="下一个" label_orientation="@integer/vertical" stroke_color="@color/toggle_key_stroke"
             normal_bg_color="@color/toggle_key_normal_bg" text_size="24px" cross_row="2"
@@ -34,16 +50,25 @@
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
             text_color="@color/toggle_key_label" />
 
-        <!-- Case key -->
-        <key icon="@drawable/ic_lower_case" keycode="115"/>
+        <key label="z" keycode="54"/>
 
-        <keys labels="z|x|c|v" codes="54|52|31|50" splitter="|"/>
+        <key label="zh"/>
+
+        <keys labels="x|c" codes="52|31" splitter="|"/>
+
+        <key label="ch"/>
+
+        <key label="v" keycode="50"/>
 
         <!-- Space bar -->
-        <key icon="@drawable/ic_long_space_key" cross_columns="2" keycode="62"
-            icon_width="@dimen/space_long_icon_width" icon_height="@dimen/space_icon_height"/>
+        <key icon="@drawable/ic_short_space_key" keycode="62"
+            icon_width="@dimen/space_short_icon_width" icon_height="@dimen/space_icon_height"/>
 
-        <keys labels="b|n|m|." codes="30|42|41|56" splitter="|"/>
+        <keys labels="b|n|m|" codes="30|42|41" splitter="|"/>
+
+        <key label="，" keycode="55"/>
+
+        <key label="。" keycode="@integer/key_code_commit_label"/>
 
     </row>
 </keyboard>
