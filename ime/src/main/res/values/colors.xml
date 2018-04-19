@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="default_key_selected_bg">#0373dd</color>
+    <color name="default_key_pressed_bg">#034f97</color>
 
     <color name="default_soft_key_label">#FFFFFF</color>
     <color name="default_soft_key_normal_bg">#242c4c</color>

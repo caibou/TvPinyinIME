@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard default_position_x="@dimen/px_415" default_position_y="@dimen/px_124">
+
+    <row margin_top="" >
+        <!-- Switch to Chinese keyboard button -->
+        <key label="英/中" text_size="@dimen/function_key_text_size" width="@dimen/big_key_width"
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
+            text_color="@color/toggle_key_label"/>
+
+        <keys labels="1|2|3|." codes="8|9|10|56" width="@dimen/big_key_width" splitter="|"/>
+
+        <!-- Delete button -->
+        <key icon="@drawable/ic_delete" width="@dimen/middle_key_width"
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
+    </row>
+
+    <row>
+        <key label="123" width="@dimen/big_key_width" text_color="@color/toggle_key_label"
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"/>
+
+        <keys labels="4|5|6|0" codes="11|12|13|7" width="@dimen/big_key_width" splitter="|"/>
+
+        <key label="下一个" label_orientation="@integer/vertical" width="@dimen/middle_key_width"
+            normal_bg_color="@color/toggle_key_normal_bg" text_size="24px" cross_row="2"
+            stroke_color="@color/toggle_key_stroke"/>
+    </row>
+
+    <row>
+        <key label="符" text_size="@dimen/function_key_text_size" width="@dimen/big_key_width"
+            stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
+            text_color="@color/toggle_key_label" />
+
+        <keys labels="7|8|9|@" codes="14|15|16|77" width="@dimen/big_key_width" splitter="|"/>
+
+    </row>
+</keyboard>

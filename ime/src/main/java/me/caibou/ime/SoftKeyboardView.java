@@ -27,6 +27,7 @@ public class SoftKeyboardView extends View {
 
     private Paint paint;
     private RectF rectF;
+    private Rect labelBound;
 
     public SoftKeyboardView(Context context) {
         this(context, null);
@@ -48,6 +49,7 @@ public class SoftKeyboardView extends View {
     private void initial(Context context) {
         paint = new Paint();
         rectF = new RectF();
+        labelBound = new Rect();
     }
 
     @Override
@@ -63,6 +65,8 @@ public class SoftKeyboardView extends View {
             KeyRow keyRow = softKeyboard.getRow(rowIndex);
             for (int keyIndex = 0, size = keyRow.keyCount(); keyIndex < size; keyIndex++) {
                 SoftKey softKey = keyRow.getKey(keyIndex);
+                softKey.setSelected(rowIndex == softKeyboard.getSelectRow() &&
+                        keyIndex == softKeyboard.getSelectIndex());
                 drawSoftKey(canvas, softKey);
             }
         }
@@ -85,7 +89,7 @@ public class SoftKeyboardView extends View {
         paint.setColor(softKey.getStrokeColor());
         canvas.drawRect(rectF, paint);
 
-        if (softKey.getIcon() != null){
+        if (softKey.getIcon() != null) {
             Drawable icon = softKey.getIcon();
             int left = (int) (rectF.centerX() - softKey.getIconWidth() / 2);
             int top = (int) (rectF.centerY() - softKey.getIconHeight() / 2);
@@ -103,12 +107,10 @@ public class SoftKeyboardView extends View {
             paint.setTextSize(softKey.getTextSize());
             paint.setAntiAlias(true);
 
+            paint.getTextBounds(label, 0, label.length(), labelBound);
 
-            Rect bound = new Rect();
-            paint.getTextBounds(label, 0, label.length(), bound);
-
-            float x = rectF.centerX() - bound.width() / 2;
-            float y = rectF.centerY() + bound.height() / 2;
+            float x = rectF.centerX() - labelBound.width() / 2;
+            float y = rectF.centerY() + labelBound.height() / 2;
             canvas.drawText(label, x, y, paint);
         }
 

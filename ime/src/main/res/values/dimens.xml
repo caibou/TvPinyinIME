@@ -25,4 +25,5 @@
 
     <dimen name="px_213">213px</dimen>
     <dimen name="px_124">124px</dimen>
+    <dimen name="px_415">415px</dimen>
 </resources>

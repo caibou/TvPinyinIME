@@ -14,6 +14,9 @@ public class SoftKeyboard {
     private float keysSpacing;
     private boolean isUpperCase;
 
+    private int selectRow, selectIndex;
+    private SoftKey selectedKey;
+
     private List<KeyRow> rows = new ArrayList<>();
 
     public void addSoftKey(SoftKey softKey){
@@ -52,4 +55,27 @@ public class SoftKeyboard {
         this.keysSpacing = keysSpacing;
     }
 
+    public int getSelectRow() {
+        return selectRow;
+    }
+
+    public void setSelectRow(int selectRow) {
+        this.selectRow = selectRow;
+    }
+
+    public int getSelectIndex() {
+        return selectIndex;
+    }
+
+    public void setSelectIndex(int selectIndex) {
+        this.selectIndex = selectIndex;
+    }
+
+    public SoftKey getSelectedKey() {
+        return selectedKey;
+    }
+
+    public void setSelectedKey(SoftKey selectedKey) {
+        this.selectedKey = selectedKey;
+    }
 }

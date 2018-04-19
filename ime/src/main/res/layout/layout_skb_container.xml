@@ -11,7 +11,6 @@
     <me.caibou.ime.CandidatesView
         android:id="@+id/keyboard_candidate_view"
         android:layout_width="match_parent"
-        android:layout_height="94px"
-        android:background="@color/colorAccent" />
+        android:layout_height="@dimen/candidate_column_height" />
 
 </me.caibou.ime.SkbContainer>

@@ -33,6 +33,7 @@ public class KeyboardLoader {
     private static final String ATTR_DEF_KEY_NORMAL_COLOR = "soft_key_normal_bg_color";
     private static final String ATTR_DEF_KEY_STROKE_COLOR = "default_soft_key_stroke_color";
     private static final String ATTR_DEF_KEY_SELECTED_COLOR = "default_soft_key_selected_bg_color";
+    private static final String ATTR_DEF_KEY_PRESSED_COLOR = "default_soft_key_pressed_bg_color";
 
     private static final String ATTR_DEF_KEY_WIDTH = "default_soft_key_width";
     private static final String ATTR_DEF_KEY_HEIGHT = "default_soft_key_height";
@@ -69,7 +70,7 @@ public class KeyboardLoader {
     private static final String ATTR_LABEL_ORIENTATION = "label_orientation";
 
     private Resources resources;
-    private int defKeyTextColor, defKeyNormalColor, defKeyStrokeColor, defKeySelectedColor;
+    private int defKeyTextColor, defKeyNormalColor, defKeyStrokeColor, defKeySelectedColor, defPressedColor;
     private float defKeyStrokeWidth, defKeyIconSize, defTextSize;
     private float defKeyWidth, defKeyHeight, defPosX, defPosY, defKeySpacing;
 
@@ -87,7 +88,7 @@ public class KeyboardLoader {
             while (event != XmlPullParser.END_DOCUMENT) {
                 if (event == XmlResourceParser.START_TAG) {
                     parseElementStartTag(xmlParser, softKeyboard);
-                } else if (event == XmlResourceParser.END_TAG){
+                } else if (event == XmlResourceParser.END_TAG) {
                     parseElementEndTag(xmlParser, softKeyboard);
                 }
                 event = xmlParser.next();
@@ -142,7 +143,8 @@ public class KeyboardLoader {
                 resources.getColor(R.color.default_soft_key_stroke));
         defKeySelectedColor = XmlParseUtil.loadColor(resources, xmlParser, ATTR_DEF_KEY_SELECTED_COLOR,
                 resources.getColor(R.color.default_key_selected_bg));
-
+        defPressedColor = XmlParseUtil.loadColor(resources, xmlParser, ATTR_DEF_KEY_PRESSED_COLOR,
+                resources.getColor(R.color.default_key_pressed_bg));
         defKeyWidth = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_WIDTH,
                 resources.getDimension(R.dimen.default_soft_key_width));
         defKeyHeight = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_HEIGHT,
@@ -228,7 +230,7 @@ public class KeyboardLoader {
         softKey.setNormalColor(XmlParseUtil.loadColor(
                 resources, xmlParser, ATTR_NORMAL_BG_COLOR, defKeyNormalColor));
         softKey.setPressedColor(XmlParseUtil.loadColor(
-                resources, xmlParser, ATTR_PRESSED_COLOR, defKeySelectedColor));
+                resources, xmlParser, ATTR_PRESSED_COLOR, defPressedColor));
         softKey.setSelectedColor(XmlParseUtil.loadColor(
                 resources, xmlParser, ATTR_SELECTED_COLOR, defKeySelectedColor));
         softKey.setStrokeColor(XmlParseUtil.loadColor(
