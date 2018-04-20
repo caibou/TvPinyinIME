@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<me.caibou.ime.SkbContainer xmlns:android="http://schemas.android.com/apk/res/android"
+<me.caibou.ime.keyboard.SkbContainer xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <me.caibou.ime.SoftKeyboardView
+    <me.caibou.ime.keyboard.SoftKeyboardView
         android:id="@+id/keyboard_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <me.caibou.ime.CandidatesView
-        android:id="@+id/keyboard_candidate_view"
+    <View
+        android:background="@color/dividing_color"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/candidate_column_height" />
+        android:layout_height="2px" />
 
-</me.caibou.ime.SkbContainer>
+</me.caibou.ime.keyboard.SkbContainer>

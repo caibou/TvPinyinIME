@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard default_position_x="@dimen/px_213" default_position_y="@dimen/px_124">
+<keyboard default_position_x="@dimen/px_213" default_position_y="@dimen/default_keyboard_position_y">
 
     <row margin_top="" >
         <!-- Switch to Chinese keyboard button -->

@@ -6,6 +6,7 @@
     <dimen name="default_soft_key_icon_size">44px</dimen>
     <dimen name="default_soft_key_text_size">40px</dimen>
     <dimen name="default_soft_keys_spacing">18px</dimen>
+    <dimen name="default_keyboard_position_y">28px</dimen>
 
     <dimen name="soft_keyboard_height">436px</dimen>
     <dimen name="soft_keyboard_padding_top">28px</dimen>
@@ -28,4 +29,5 @@
     <dimen name="px_124">124px</dimen>
     <dimen name="px_415">415px</dimen>
     <dimen name="px_159">159px</dimen>
+    <dimen name="px_28">28px</dimen>
 </resources>

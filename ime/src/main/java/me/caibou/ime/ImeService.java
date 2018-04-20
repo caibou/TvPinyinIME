@@ -2,13 +2,14 @@ package me.caibou.ime;
 
 import android.inputmethodservice.InputMethodService;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import me.caibou.ime.keyboard.CandidatesView;
+import me.caibou.ime.keyboard.KeyboardListener;
+import me.caibou.ime.keyboard.SkbContainer;
 import me.caibou.ime.pattern.SoftKey;
 
 /**
@@ -23,7 +24,7 @@ public class ImeService extends InputMethodService implements KeyboardListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        MeasureData.measure(getApplicationContext());
+        MeasureHelper.measure(getApplicationContext());
     }
 
     @Override
@@ -31,17 +32,13 @@ public class ImeService extends InputMethodService implements KeyboardListener {
         LayoutInflater inflater = getLayoutInflater();
         skbContainer = (SkbContainer) inflater.inflate(R.layout.layout_skb_container, null);
         skbContainer.setKeyboardListener(this);
+        setCandidatesViewShown(true);
         return skbContainer;
     }
 
     @Override
-    public void onStartInput(EditorInfo attribute, boolean restarting) {
-        Log.i(TAG, "onStartInput: " + getCurrentInputEditorInfo().actionId);
-    }
-
-    @Override
-    public void onStartInputView(EditorInfo info, boolean restarting) {
-        Log.i(TAG, "onStartInput: " + getCurrentInputEditorInfo().actionId);
+    public View onCreateCandidatesView() {
+        return new CandidatesView(getApplicationContext());
     }
 
     @Override
@@ -56,6 +53,7 @@ public class ImeService extends InputMethodService implements KeyboardListener {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+
         if (isImeServiceStop()) {
             if (skbContainer.onSoftKeyUp(keyCode, event)) {
                 return true;
