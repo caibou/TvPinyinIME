@@ -60,10 +60,10 @@ public class SkbContainer extends FrameLayout {
     }
 
     public boolean onSoftKeyUp(int keyCode, KeyEvent event) {
+        SoftKey softKey = softKeyboard.getRow(softKeyboard.getSelectRow()).getKey(softKeyboard.getSelectIndex());
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
-                SoftKey softKey = softKeyboard.getRow(softKeyboard.getSelectRow()).getKey(softKeyboard.getSelectIndex());
                 if (softKey != null){
                     softKey.setPressed(false);
                     if (softKey.isCustomizeKey()){
