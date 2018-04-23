@@ -130,6 +130,7 @@ public class SkbContainer extends FrameLayout {
                 keyboardView.invalidate();
                 break;
             case KEYCODE_COMPOSE_WORDS:
+            case KEYCODE_CANDI_SYMBOL:
                 listener.onSoftKeyClick(softKey);
                 break;
         }

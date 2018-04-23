@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TvPinyinIME</string>
+    <string-array name="candidate_symbols">
+        <item>\?</item>
+        <item>!</item>
+        <item>-</item>
+        <item>:</item>
+        <item>&#38;</item>
+        <item>(</item>
+        <item>)</item>
+        <item>*</item>
+    </string-array>
 </resources>

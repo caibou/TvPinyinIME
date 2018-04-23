@@ -17,6 +17,9 @@ import com.android.inputmethod.pinyin.IPinyinDecoderService;
 import com.android.inputmethod.pinyin.ImeState;
 import com.android.inputmethod.pinyin.PinyinDecoderService;
 
+import java.util.Arrays;
+import java.util.List;
+
 import me.caibou.ime.keyboard.CandidatesView;
 import me.caibou.ime.keyboard.KeyboardListener;
 import me.caibou.ime.keyboard.SkbContainer;
@@ -151,7 +154,9 @@ public class ImeService extends InputMethodService implements KeyboardListener {
         }
 
         if (keyCode == SkbContainer.KEYCODE_CANDI_SYMBOL){
-
+            String[] symbols = getResources().getStringArray(R.array.candidate_symbols);
+            List<String> symbolList = Arrays.asList(symbols);
+            candidatesView.updateCandidates(symbolList);
         }
 
         if (KeyEvent.KEYCODE_DEL == keyCode) {
