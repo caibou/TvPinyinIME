@@ -3,7 +3,6 @@ package me.caibou.ime.keyboard;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -21,17 +20,18 @@ import me.caibou.ime.R;
  */
 public class CandidatesView extends View {
 
+    private static final float SELECT_BOUND_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.074074f;
+    private static final float SELECT_BOUND_PADDING = MeasureHelper.SCREEN_HEIGHT * 0.0125f;
+    private static final float VIEW_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.087037f;
+    private static final float WORD_SPACING = MeasureHelper.SCREEN_WIDTH * 0.046875f;
+    private static final float FONT_SIZE = 48f;
+
+    private Paint paint;
+    private RectF selectBound;
     private Scroller scroller;
 
     private List<String> candidates;
-
-    private float wordSpacing, leftPadding, currentTextX;
-
-    private Paint paint;
-
-    private RectF selectBound;
-    private Rect textBound;
-
+    private float leftPadding, currentTextX;
     private int selectIndex;
 
     public CandidatesView(Context context) {
@@ -52,21 +52,9 @@ public class CandidatesView extends View {
         candidates = new ArrayList<>();
 
         paint = new Paint();
-
-        textBound = new Rect();
         selectBound = new RectF();
 
-        wordSpacing = MeasureHelper.sScreenWidth * 0.046875f;
-        leftPadding = MeasureHelper.sScreenWidth * 0.123958f;
-
-
-        mockCandidates();
-    }
-
-    private void mockCandidates() {
-        for (int i = 0; i < 20; i++) {
-            candidates.add("哈");
-        }
+        leftPadding = MeasureHelper.SCREEN_WIDTH * 0.123958f;
     }
 
     @Override
@@ -75,24 +63,40 @@ public class CandidatesView extends View {
         int backgroundColor = getResources().getColor(R.color.keyboard_background_color);
         canvas.drawColor(backgroundColor);
         currentTextX = leftPadding;
+        if (candidates.isEmpty()) {
+            // TODO: 2018/4/23 Draw tab
+        } else {
+            drawCandidates(canvas);
+        }
+    }
 
-        paint.setTextSize(48f);
+    private void drawCandidates(Canvas canvas) {
+        paint.setTextSize(FONT_SIZE);
         float textHeight = MeasureHelper.getFontHeight(paint);
-
         for (int index = 0, size = candidates.size(); index < size; index++) {
             String text = candidates.get(index);
             float textWidth = paint.measureText(text);
-            if (index == selectIndex){
+            if (index == selectIndex) {
                 drawSelectBound(canvas, textWidth);
             }
             drawCandidateWord(canvas, textHeight, text);
-            currentTextX += wordSpacing + textWidth;
+            currentTextX += WORD_SPACING + textWidth;
         }
+    }
 
+    private void drawCandidateWord(Canvas canvas, float textHeight, String text) {
+        paint.reset();
+        paint.setTextSize(FONT_SIZE);
+        paint.setColor(getResources().getColor(R.color.default_soft_key_label));
+        canvas.drawText(text, currentTextX, (VIEW_HEIGHT + textHeight) / 2, paint);
     }
 
     private void drawSelectBound(Canvas canvas, float textWidth) {
-        selectBound.set(currentTextX - 24, 7, currentTextX + textWidth + 24, 87);
+        float left = currentTextX - SELECT_BOUND_PADDING;
+        float top = (VIEW_HEIGHT - SELECT_BOUND_HEIGHT) / 2;
+        float right = currentTextX + textWidth + SELECT_BOUND_PADDING;
+        float bottom = top + SELECT_BOUND_HEIGHT;
+        selectBound.set(left, top, right, bottom);
 
         paint.reset();
         paint.setStyle(Paint.Style.FILL);
@@ -105,13 +109,6 @@ public class CandidatesView extends View {
         canvas.drawRect(selectBound, paint);
     }
 
-    private void drawCandidateWord(Canvas canvas, float textHeight, String text) {
-        paint.reset();
-        paint.setTextSize(48f);
-        paint.setColor(getResources().getColor(R.color.default_soft_key_label));
-        canvas.drawText(text, currentTextX, (getHeight() + textHeight) / 2, paint);
-    }
-
     public void cursorForward() {
 
     }
@@ -120,8 +117,15 @@ public class CandidatesView extends View {
 
     }
 
+    public void clean() {
+        candidates.clear();
+        invalidate();
+    }
+
     public void updateCandidates(List<String> candidates) {
         this.candidates = candidates;
+        selectIndex = 0;
+        invalidate();
     }
 
     @Override
@@ -135,6 +139,7 @@ public class CandidatesView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(1920, 94);
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(widthMeasureSpec, MeasureSpec.AT_MOST);
+        setMeasuredDimension(widthMeasureSpec, (int) VIEW_HEIGHT);
     }
 }

@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import me.caibou.ime.InputMethodSwitcher;
 import me.caibou.ime.pattern.KeyRow;
 import me.caibou.ime.pattern.SoftKey;
 
@@ -29,6 +30,8 @@ public class SoftKeyboardView extends View {
     private Paint paint;
     private RectF rectF;
     private Rect labelBound;
+
+    private boolean isUpperCase;
 
     public SoftKeyboardView(Context context) {
         this(context, null);
@@ -60,14 +63,14 @@ public class SoftKeyboardView extends View {
         }
 
         canvas.drawColor(getResources().getColor(softKeyboard.getBackgroundColor()));
-
+        isUpperCase = InputMethodSwitcher.getInstance().isUpperCase();
         for (int rowIndex = 0, rowNum = softKeyboard.getRowNum(); rowIndex < rowNum; rowIndex++) {
 
             KeyRow keyRow = softKeyboard.getRow(rowIndex);
             for (int keyIndex = 0, size = keyRow.keyCount(); keyIndex < size; keyIndex++) {
                 SoftKey softKey = keyRow.getKey(keyIndex);
                 softKey.setSelected(rowIndex == softKeyboard.getSelectRow() &&
-                        keyIndex == softKeyboard.getSelectIndex());
+                        keyIndex == softKeyboard.getSelectIndex() && softKeyboard.isSelected());
                 drawSoftKey(canvas, softKey);
             }
         }
@@ -102,6 +105,9 @@ public class SoftKeyboardView extends View {
 
         if (!TextUtils.isEmpty(softKey.getKeyLabel())) {
             String label = softKey.getKeyLabel();
+            if (isUpperCase){
+                label = label.toUpperCase();
+            }
             paint.reset();
             paint.setColor(softKey.getTextColor());
             paint.setTypeface(Typeface.DEFAULT_BOLD);

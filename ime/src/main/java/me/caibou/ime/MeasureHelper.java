@@ -10,15 +10,15 @@ import android.view.WindowManager;
  */
 public class MeasureHelper {
 
-    public static int sScreenWidth;
-    public static int sScreenHeight;
+    public static int SCREEN_WIDTH;
+    public static int SCREEN_HEIGHT;
 
     public static void measure(Context context){
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         assert wm != null;
         Display display = wm.getDefaultDisplay();
-        sScreenWidth = display.getWidth();
-        sScreenHeight = display.getHeight();
+        SCREEN_WIDTH = display.getWidth();
+        SCREEN_HEIGHT = display.getHeight();
     }
 
     public static float getFontHeight(Paint paint){

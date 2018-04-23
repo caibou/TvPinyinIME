@@ -13,7 +13,6 @@ public class SoftKeyboard {
 
     private int backgroundColor;
     private float keysSpacing;
-    private boolean isUpperCase;
 
     private int selectRow, selectIndex;
     private SoftKey selectedKey;
@@ -70,6 +69,7 @@ public class SoftKeyboard {
 
     public void setSelectIndex(int selectIndex) {
         this.selectIndex = selectIndex;
+        this.selectedKey = rows.get(selectRow).getKey(selectIndex);
     }
 
     public SoftKey getSelectedKey() {
@@ -79,4 +79,17 @@ public class SoftKeyboard {
     public void setSelectedKey(SoftKey selectedKey) {
         this.selectedKey = selectedKey;
     }
+
+    public void cleanSelect(){
+        selectedKey = null;
+    }
+
+    public void reSelect(){
+        this.selectedKey = rows.get(selectRow).getKey(selectIndex);
+    }
+
+    public boolean isSelected(){
+        return selectedKey != null;
+    }
+
 }

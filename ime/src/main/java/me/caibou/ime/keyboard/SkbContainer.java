@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
+import me.caibou.ime.InputMethodSwitcher;
+import me.caibou.ime.MeasureHelper;
 import me.caibou.ime.R;
 import me.caibou.ime.pattern.SoftKey;
 
@@ -19,11 +21,15 @@ public class SkbContainer extends FrameLayout {
     private SoftKeyboard softKeyboard;
     private KeyboardListener listener;
 
-    private static final int KEYCODE_SWITCH_TO_QWERTY_CN = -100;
-    private static final int KEYCODE_SWITCH_TO_EN = -101;
-    private static final int KEYCODE_SWITCH_TO_NUMBER = -103;
-    private static final int KEYCODE_COMMIT_LABEL = -105;
-    private static final int KEYCODE_COMPOSE_WORDS = -106;
+    private static final float VIEW_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.314814f;
+
+    public static final int KEYCODE_SWITCH_TO_QWERTY_CN = -100;
+    public static final int KEYCODE_SWITCH_TO_EN = -101;
+    public static final int KEYCODE_SWITCH_TO_NUMBER = -103;
+    public static final int KEYCODE_CANDI_SYMBOL = -104;
+    public static final int KEYCODE_COMMIT_LABEL = -105;
+    public static final int KEYCODE_COMPOSE_WORDS = -106;
+    public static final int KEYCODE_CASE_SWITCH = -107;
 
     public SkbContainer(@NonNull Context context) {
         this(context, null);
@@ -38,22 +44,39 @@ public class SkbContainer extends FrameLayout {
     }
 
     public boolean onSoftKeyDown(int keyCode, KeyEvent event) {
+        int selectRow = softKeyboard.getSelectRow();
+        int selectIndex = softKeyboard.getSelectIndex();
+        int rowSize = softKeyboard.getRow(selectRow).keyCount();
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
-                softKeyboard.setSelectIndex(softKeyboard.getSelectIndex() - 1);
-                keyboardView.invalidate();
+                if (selectIndex - 1 >= 0) {
+                    selectIndex--;
+                    softKeyboard.setSelectIndex(selectIndex);
+                    keyboardView.invalidate();
+                }
                 return true;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
-                softKeyboard.setSelectIndex(softKeyboard.getSelectIndex() + 1);
-                keyboardView.invalidate();
+                if (selectIndex + 1 < rowSize) {
+                    selectIndex++;
+                    softKeyboard.setSelectIndex(selectIndex);
+                    keyboardView.invalidate();
+                }
                 return true;
             case KeyEvent.KEYCODE_DPAD_UP:
-                softKeyboard.setSelectRow(softKeyboard.getSelectRow() - 1);
+                if (selectRow - 1 >= 0){
+                    selectRow--;
+                    softKeyboard.setSelectRow(selectRow);
+                } else {
+                    softKeyboard.cleanSelect();
+                }
                 keyboardView.invalidate();
                 return true;
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                softKeyboard.setSelectRow(softKeyboard.getSelectRow() + 1);
-                keyboardView.invalidate();
+                if (selectRow + 1 < softKeyboard.getRowNum()){
+                    selectRow++;
+                    softKeyboard.setSelectRow(selectRow);
+                    keyboardView.invalidate();
+                }
                 return true;
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
@@ -71,22 +94,23 @@ public class SkbContainer extends FrameLayout {
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
                 SoftKey softKey = softKeyboard.getRow(softKeyboard.getSelectRow()).getKey(softKeyboard.getSelectIndex());
-                if (softKey != null){
+                if (softKey != null) {
                     softKey.setPressed(false);
-                    if (softKey.isCustomizeKey()){
+                    if (softKey.isCustomizeKey()) {
                         processCustomizeKey(softKey);
                     } else {
                         listener.onSoftKeyClick(softKey);
                     }
 
                 }
+                keyboardView.invalidate();
                 return true;
         }
         return false;
     }
 
     private void processCustomizeKey(SoftKey softKey) {
-        switch (softKey.getKeyCode()){
+        switch (softKey.getKeyCode()) {
             case KEYCODE_COMMIT_LABEL:
                 listener.onCommitText(softKey.getKeyLabel());
                 break;
@@ -94,10 +118,19 @@ public class SkbContainer extends FrameLayout {
                 updateKeyboardLayout(R.xml.skb_qwerty_en);
                 break;
             case KEYCODE_SWITCH_TO_QWERTY_CN:
+                InputMethodSwitcher.getInstance().setUpperCase(false);
                 updateKeyboardLayout(R.xml.skb_qwerty_cn);
                 break;
             case KEYCODE_SWITCH_TO_NUMBER:
                 updateKeyboardLayout(R.xml.skb_number);
+                break;
+            case KEYCODE_CASE_SWITCH:
+                InputMethodSwitcher switcher = InputMethodSwitcher.getInstance();
+                InputMethodSwitcher.getInstance().setUpperCase(!switcher.isUpperCase());
+                keyboardView.invalidate();
+                break;
+            case KEYCODE_COMPOSE_WORDS:
+                listener.onSoftKeyClick(softKey);
                 break;
         }
     }
@@ -106,10 +139,12 @@ public class SkbContainer extends FrameLayout {
         this.listener = listener;
     }
 
-    private void updateKeyboardLayout(int layoutId){
+    private void updateKeyboardLayout(int layoutId) {
         softKeyboard = new KeyboardLoader(getContext()).load(layoutId);
+        softKeyboard.reSelect();
         keyboardView.setSoftKeyboard(softKeyboard);
         keyboardView.invalidate();
+        InputMethodSwitcher.getInstance().setKeyboardLayoutId(layoutId);
     }
 
     @Override
@@ -122,7 +157,7 @@ public class SkbContainer extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         widthMeasureSpec = MeasureSpec.makeMeasureSpec(widthMeasureSpec, MeasureSpec.AT_MOST);
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(340, MeasureSpec.EXACTLY);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec((int) VIEW_HEIGHT, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }

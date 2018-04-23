@@ -3,7 +3,7 @@
 
     <row margin_top="" >
         <!-- Switch to English keyboard button -->
-        <key label="英/中" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
+        <key label="中/英" text_size="@dimen/function_key_text_size" text_color="@color/toggle_key_label"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
             width="@dimen/big_key_width" keycode="@integer/key_code_switch_to_en"/>
 

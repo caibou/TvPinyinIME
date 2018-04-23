@@ -28,6 +28,7 @@
                 android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
+        <service android:name="com.android.inputmethod.pinyin.PinyinDecoderService" />
     </application>
 
 </manifest>
