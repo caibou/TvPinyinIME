@@ -3,6 +3,7 @@ package me.caibou.ime.keyboard;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -22,17 +23,19 @@ public class CandidatesView extends View {
 
     private static final float SELECT_BOUND_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.074074f;
     private static final float SELECT_BOUND_PADDING = MeasureHelper.SCREEN_HEIGHT * 0.0125f;
-    private static final float VIEW_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.087037f;
-    private static final float WORD_SPACING = MeasureHelper.SCREEN_WIDTH * 0.046875f;
+    private static final float VIEW_WIDTH = MeasureHelper.SCREEN_WIDTH * 0.745833f;
+    private static final float SPACING = MeasureHelper.SCREEN_WIDTH * 0.046875f;
     private static final float FONT_SIZE = 48f;
 
     private Paint paint;
-    private RectF selectBound;
+    private RectF textBound;
+    private Rect selectedBound;
     private Scroller scroller;
 
     private List<String> candidates;
-    private float leftPadding, currentTextX;
+    private float currentBoundX, textHeight;
     private int selectIndex;
+    private boolean cursorAlive;
 
     public CandidatesView(Context context) {
         this(context, null);
@@ -52,17 +55,18 @@ public class CandidatesView extends View {
         candidates = new ArrayList<>();
 
         paint = new Paint();
-        selectBound = new RectF();
+        paint.setTextSize(FONT_SIZE);
+        textHeight = MeasureHelper.getFontHeight(paint);
 
-        leftPadding = MeasureHelper.SCREEN_WIDTH * 0.123958f;
+        selectedBound = new Rect();
+        textBound = new RectF();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-
+        currentBoundX = 0;
         int backgroundColor = getResources().getColor(R.color.keyboard_background_color);
         canvas.drawColor(backgroundColor);
-        currentTextX = leftPadding;
         if (candidates.isEmpty()) {
             // TODO: 2018/4/23 Draw tab
         } else {
@@ -71,60 +75,88 @@ public class CandidatesView extends View {
     }
 
     private void drawCandidates(Canvas canvas) {
-        paint.setTextSize(FONT_SIZE);
-        float textHeight = MeasureHelper.getFontHeight(paint);
         for (int index = 0, size = candidates.size(); index < size; index++) {
             String text = candidates.get(index);
             float textWidth = paint.measureText(text);
-            if (index == selectIndex) {
-                drawSelectBound(canvas, textWidth);
+
+            calTextBound(textWidth);
+            if (index == selectIndex && cursorAlive) {
+                drawSelectBound(canvas);
+                selectedBound.set((int) textBound.left, (int) textBound.top,
+                        (int) textBound.right, (int) textBound.bottom);
             }
-            drawCandidateWord(canvas, textHeight, text);
-            currentTextX += WORD_SPACING + textWidth;
+            drawCandidateWord(canvas, text);
+            currentBoundX += SPACING + textWidth;
         }
     }
 
-    private void drawCandidateWord(Canvas canvas, float textHeight, String text) {
+    private void calTextBound(float textWidth) {
+        float left = currentBoundX;
+        float top = (getHeight() - SELECT_BOUND_HEIGHT) / 2;
+        float right = currentBoundX + textWidth + SELECT_BOUND_PADDING * 2;
+        float bottom = top + SELECT_BOUND_HEIGHT;
+        textBound.set(left, top, right, bottom);
+    }
+
+    private void drawCandidateWord(Canvas canvas, String text) {
         paint.reset();
         paint.setTextSize(FONT_SIZE);
         paint.setColor(getResources().getColor(R.color.default_soft_key_label));
-        canvas.drawText(text, currentTextX, (VIEW_HEIGHT + textHeight) / 2, paint);
+        canvas.drawText(text, currentBoundX + SELECT_BOUND_PADDING, (getHeight() + textHeight) / 2, paint);
     }
 
-    private void drawSelectBound(Canvas canvas, float textWidth) {
-        float left = currentTextX - SELECT_BOUND_PADDING;
-        float top = (VIEW_HEIGHT - SELECT_BOUND_HEIGHT) / 2;
-        float right = currentTextX + textWidth + SELECT_BOUND_PADDING;
-        float bottom = top + SELECT_BOUND_HEIGHT;
-        selectBound.set(left, top, right, bottom);
-
+    private void drawSelectBound(Canvas canvas) {
         paint.reset();
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(getResources().getColor(R.color.default_key_selected_bg));
-        canvas.drawRect(selectBound, paint);
+        canvas.drawRect(textBound, paint);
 
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(2);
         paint.setColor(getResources().getColor(R.color.default_soft_key_stroke));
-        canvas.drawRect(selectBound, paint);
+        canvas.drawRect(textBound, paint);
     }
 
     public void cursorForward() {
-
+        if (selectIndex + 1 < candidates.size()) {
+            selectIndex++;
+            invalidate();
+        }
     }
 
     public void cursorBackward() {
+        if (selectIndex - 1 >= 0) {
+            selectIndex--;
+            invalidate();
+        }
+    }
 
+    public void cancelSelected() {
+        cursorAlive = false;
+        invalidate(selectedBound);
+    }
+
+    public String selectCandidate() {
+        return candidates.get(selectIndex);
     }
 
     public void clean() {
+        selectIndex = 0;
         candidates.clear();
         invalidate();
     }
 
+    public void setCursorAlive(boolean cursorAlive){
+        this.cursorAlive = cursorAlive;
+    }
+
+    public boolean isCursorAlive(){
+        return cursorAlive;
+    }
+
     public void updateCandidates(List<String> candidates) {
-        this.candidates = candidates;
-        selectIndex = 0;
+        this.candidates.clear();
+        this.candidates.addAll(candidates);
         invalidate();
     }
 
@@ -139,7 +171,6 @@ public class CandidatesView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        widthMeasureSpec = MeasureSpec.makeMeasureSpec(widthMeasureSpec, MeasureSpec.AT_MOST);
-        setMeasuredDimension(widthMeasureSpec, (int) VIEW_HEIGHT);
+        setMeasuredDimension((int) VIEW_WIDTH, heightMeasureSpec);
     }
 }

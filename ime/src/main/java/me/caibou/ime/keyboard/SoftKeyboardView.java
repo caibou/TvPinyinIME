@@ -32,6 +32,7 @@ public class SoftKeyboardView extends View {
     private Rect labelBound;
 
     private boolean isUpperCase;
+    private boolean isCursorAlive = true;
 
     public SoftKeyboardView(Context context) {
         this(context, null);
@@ -70,7 +71,7 @@ public class SoftKeyboardView extends View {
             for (int keyIndex = 0, size = keyRow.keyCount(); keyIndex < size; keyIndex++) {
                 SoftKey softKey = keyRow.getKey(keyIndex);
                 softKey.setSelected(rowIndex == softKeyboard.getSelectRow() &&
-                        keyIndex == softKeyboard.getSelectIndex() && softKeyboard.isSelected());
+                        keyIndex == softKeyboard.getSelectIndex() && isCursorAlive);
                 drawSoftKey(canvas, softKey);
             }
         }
@@ -123,4 +124,11 @@ public class SoftKeyboardView extends View {
 
     }
 
+    public boolean isCursorAlive() {
+        return isCursorAlive;
+    }
+
+    public void setCursorAlive(boolean cursorAlive) {
+        isCursorAlive = cursorAlive;
+    }
 }

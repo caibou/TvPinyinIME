@@ -18,6 +18,7 @@ import me.caibou.ime.pattern.SoftKey;
 public class SkbContainer extends FrameLayout {
 
     private SoftKeyboardView keyboardView;
+    private CandidatesView candidatesView;
     private SoftKeyboard softKeyboard;
     private KeyboardListener listener;
 
@@ -63,16 +64,17 @@ public class SkbContainer extends FrameLayout {
                 }
                 return true;
             case KeyEvent.KEYCODE_DPAD_UP:
-                if (selectRow - 1 >= 0){
+                if (selectRow - 1 >= 0) {
                     selectRow--;
                     softKeyboard.setSelectRow(selectRow);
                 } else {
                     softKeyboard.cleanSelect();
+                    candidatesView.setCursorAlive(true);
                 }
                 keyboardView.invalidate();
                 return true;
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                if (selectRow + 1 < softKeyboard.getRowNum()){
+                if (selectRow + 1 < softKeyboard.getRowNum()) {
                     selectRow++;
                     softKeyboard.setSelectRow(selectRow);
                     keyboardView.invalidate();
@@ -80,7 +82,7 @@ public class SkbContainer extends FrameLayout {
                 return true;
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
-                softKeyboard.getRow(softKeyboard.getSelectRow()).getKey(softKeyboard.getSelectIndex()).setPressed(true);
+                softKeyboard.getSelectedKey().setPressed(true);
                 keyboardView.invalidate();
                 return true;
 
@@ -93,7 +95,7 @@ public class SkbContainer extends FrameLayout {
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
-                SoftKey softKey = softKeyboard.getRow(softKeyboard.getSelectRow()).getKey(softKeyboard.getSelectIndex());
+                SoftKey softKey = softKeyboard.getSelectedKey();
                 if (softKey != null) {
                     softKey.setPressed(false);
                     if (softKey.isCustomizeKey()) {
@@ -140,9 +142,12 @@ public class SkbContainer extends FrameLayout {
         this.listener = listener;
     }
 
+    public void setCandidatesView(CandidatesView candidatesView) {
+        this.candidatesView = candidatesView;
+    }
+
     private void updateKeyboardLayout(int layoutId) {
         softKeyboard = new KeyboardLoader(getContext()).load(layoutId);
-        softKeyboard.reSelect();
         keyboardView.setSoftKeyboard(softKeyboard);
         keyboardView.invalidate();
         InputMethodSwitcher.getInstance().setKeyboardLayoutId(layoutId);

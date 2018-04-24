@@ -20,6 +20,7 @@ import com.android.inputmethod.pinyin.PinyinDecoderService;
 import java.util.Arrays;
 import java.util.List;
 
+import me.caibou.ime.keyboard.CandidateContainer;
 import me.caibou.ime.keyboard.CandidatesView;
 import me.caibou.ime.keyboard.KeyboardListener;
 import me.caibou.ime.keyboard.SkbContainer;
@@ -33,6 +34,7 @@ public class ImeService extends InputMethodService implements KeyboardListener {
     private static final String TAG = "ImeService";
 
     private SkbContainer skbContainer;
+    private CandidateContainer candidateContainer;
     private CandidatesView candidatesView;
     private DecodingInfo decodingInfo;
     private PinyinDecoderServiceConnection pinyinDecoderServiceConnection;
@@ -77,15 +79,23 @@ public class ImeService extends InputMethodService implements KeyboardListener {
 
     @Override
     public View onCreateCandidatesView() {
-        if (candidatesView == null) {
-            candidatesView = new CandidatesView(getApplicationContext());
+        if (candidateContainer == null) {
+            LayoutInflater inflater = getLayoutInflater();
+            candidateContainer = (CandidateContainer) inflater.inflate(R.layout.layout_candi_container, null);
+            candidateContainer.setInputMethodService(this);
+            candidatesView = candidateContainer.candidatesView;
+            skbContainer.setCandidatesView(candidatesView);
         }
-        return candidatesView;
+        return candidateContainer;
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (isImeServiceStop()) {
+            if (candidateContainer.onSoftKeyDown(keyCode, event)){
+                return true;
+            }
+
             if (skbContainer.onSoftKeyDown(keyCode, event)) {
                 return true;
             }
@@ -95,8 +105,11 @@ public class ImeService extends InputMethodService implements KeyboardListener {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-
         if (isImeServiceStop()) {
+            if (candidateContainer.onSoftKeyUp(keyCode, event)){
+                return true;
+            }
+
             if (skbContainer.onSoftKeyUp(keyCode, event)) {
                 return true;
             }

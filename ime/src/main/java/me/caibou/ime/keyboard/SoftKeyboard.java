@@ -69,11 +69,10 @@ public class SoftKeyboard {
 
     public void setSelectIndex(int selectIndex) {
         this.selectIndex = selectIndex;
-        this.selectedKey = rows.get(selectRow).getKey(selectIndex);
     }
 
     public SoftKey getSelectedKey() {
-        return selectedKey;
+        return rows.get(selectRow).getKey(selectIndex);
     }
 
     public void setSelectedKey(SoftKey selectedKey) {
