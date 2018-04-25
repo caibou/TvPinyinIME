@@ -130,5 +130,6 @@ public class SoftKeyboardView extends View {
 
     public void setCursorAlive(boolean cursorAlive) {
         isCursorAlive = cursorAlive;
+        invalidate();
     }
 }

@@ -68,13 +68,17 @@ public class SkbContainer extends FrameLayout {
                     selectRow--;
                     softKeyboard.setSelectRow(selectRow);
                 } else {
-                    softKeyboard.cleanSelect();
+                    softKeyboard.getSelectedKey().setPressed(false);
+                    keyboardView.setCursorAlive(false);
                     candidatesView.setCursorAlive(true);
                 }
                 keyboardView.invalidate();
                 return true;
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                if (selectRow + 1 < softKeyboard.getRowNum()) {
+                if (!keyboardView.isCursorAlive()){
+                    keyboardView.setCursorAlive(true);
+                    candidatesView.setCursorAlive(false);
+                } else if (selectRow + 1 < softKeyboard.getRowNum()) {
                     selectRow++;
                     softKeyboard.setSelectRow(selectRow);
                     keyboardView.invalidate();
@@ -98,6 +102,7 @@ public class SkbContainer extends FrameLayout {
                 SoftKey softKey = softKeyboard.getSelectedKey();
                 if (softKey != null) {
                     softKey.setPressed(false);
+                    softKey.setSelected(false);
                     if (softKey.isCustomizeKey()) {
                         processCustomizeKey(softKey);
                     } else {
@@ -144,6 +149,10 @@ public class SkbContainer extends FrameLayout {
 
     public void setCandidatesView(CandidatesView candidatesView) {
         this.candidatesView = candidatesView;
+    }
+
+    public void keyboardFocus(){
+        keyboardView.setCursorAlive(true);
     }
 
     private void updateKeyboardLayout(int layoutId) {

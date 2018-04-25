@@ -4,7 +4,6 @@ import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.view.inputmethod.InputConnection;
 import android.widget.RelativeLayout;
 
 import me.caibou.ime.MeasureHelper;
@@ -18,6 +17,7 @@ public class CandidateContainer extends RelativeLayout {
     private static final float VIEW_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.087037f;
     public CandidatesView candidatesView;
     public InputMethodService inputMethodService;
+    public KeyboardListener keyboardListener;
 
     public CandidateContainer(Context context) {
         super(context);
@@ -51,8 +51,8 @@ public class CandidateContainer extends RelativeLayout {
                 }
                 break;
             case KeyEvent.ACTION_DOWN:
-                if (candidatesView.isCursorAlive()){
-                    candidatesView.cancelSelected();
+                if (candidatesView.isCursorAlive()) {
+                    candidatesView.setCursorAlive(false);
                 }
                 break;
         }
@@ -60,15 +60,14 @@ public class CandidateContainer extends RelativeLayout {
     }
 
     public boolean onSoftKeyUp(int keyCode, KeyEvent event) {
-        switch (keyCode){
+        switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
-                if (candidatesView.isCursorAlive()){
+                if (candidatesView.isCursorAlive()) {
                     String word = candidatesView.selectCandidate();
                     candidatesView.clean();
                     candidatesView.setCursorAlive(false);
-                    InputConnection ic = inputMethodService.getCurrentInputConnection();
-                    ic.commitText(word, 0);
+                    keyboardListener.onCommitText(word);
                     return true;
                 }
                 break;
@@ -76,8 +75,8 @@ public class CandidateContainer extends RelativeLayout {
         return false;
     }
 
-    public void setInputMethodService(InputMethodService inputMethodService){
-        this.inputMethodService = inputMethodService;
+    public void setKeyboardListener(KeyboardListener keyboardListener) {
+        this.keyboardListener = keyboardListener;
     }
 
     @Override

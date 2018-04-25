@@ -2,6 +2,7 @@ package me.caibou.ime.keyboard;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -33,8 +34,9 @@ public class CandidatesView extends View {
     private Scroller scroller;
 
     private List<String> candidates;
-    private float currentBoundX, textHeight;
+    private float currentBoundX, textHeight, totalLength, scrollLimitX, scrolledLength;
     private int selectIndex;
+    private float[] wordsX;
     private boolean cursorAlive;
 
     public CandidatesView(Context context) {
@@ -71,6 +73,8 @@ public class CandidatesView extends View {
             // TODO: 2018/4/23 Draw tab
         } else {
             drawCandidates(canvas);
+            paint.setColor(Color.RED);
+            canvas.drawLine(VIEW_WIDTH / 2, 0, VIEW_WIDTH / 2, getHeight(), paint);
         }
     }
 
@@ -86,7 +90,10 @@ public class CandidatesView extends View {
                         (int) textBound.right, (int) textBound.bottom);
             }
             drawCandidateWord(canvas, text);
+            wordsX[index] = currentBoundX;
+            totalLength = currentBoundX + SPACING * 2 + textWidth;
             currentBoundX += SPACING + textWidth;
+
         }
     }
 
@@ -118,22 +125,44 @@ public class CandidatesView extends View {
     }
 
     public void cursorForward() {
-        if (selectIndex + 1 < candidates.size()) {
-            selectIndex++;
+        int nextIndex = selectIndex + 1;
+        if (nextIndex < candidates.size()) {
+            scrollText(nextIndex);
+            selectIndex = nextIndex;
             invalidate();
         }
     }
+
+    private void scrollText(int nextIndex) {
+        int currX = (int) wordsX[selectIndex];
+        int nextX = (int) wordsX[nextIndex];
+        float currWidth = paint.measureText(candidates.get(selectIndex));
+        float nextWidth = paint.measureText(candidates.get(nextIndex));
+        float currCenter = currX + currWidth / 2;
+        float nextCenter = nextX + nextWidth / 2;
+        float scrollLimitX = currentBoundX - VIEW_WIDTH;
+        float dx = nextCenter - currCenter;
+        float resultScrollX = scrolledLength + dx;
+        if (resultScrollX < 0) {
+            dx = 0 - scrolledLength;
+        } else if (resultScrollX >= scrollLimitX){
+            dx = scrollLimitX - scrolledLength;
+        }
+
+        if (VIEW_WIDTH / 2 <= nextCenter && nextCenter < totalLength - VIEW_WIDTH / 2){
+            scrollBy((int) dx, 0);
+            scrolledLength += dx;
+        }
+    }
+
 
     public void cursorBackward() {
-        if (selectIndex - 1 >= 0) {
-            selectIndex--;
+        int nextIndex = selectIndex - 1;
+        if (nextIndex >= 0) {
+            scrollText(nextIndex);
+            selectIndex = nextIndex;
             invalidate();
         }
-    }
-
-    public void cancelSelected() {
-        cursorAlive = false;
-        invalidate(selectedBound);
     }
 
     public String selectCandidate() {
@@ -146,17 +175,20 @@ public class CandidatesView extends View {
         invalidate();
     }
 
-    public void setCursorAlive(boolean cursorAlive){
+    public void setCursorAlive(boolean cursorAlive) {
         this.cursorAlive = cursorAlive;
+        invalidate();
     }
 
-    public boolean isCursorAlive(){
+    public boolean isCursorAlive() {
         return cursorAlive;
     }
 
     public void updateCandidates(List<String> candidates) {
         this.candidates.clear();
         this.candidates.addAll(candidates);
+        wordsX = new float[candidates.size()];
+        scrollTo(0, 0);
         invalidate();
     }
 

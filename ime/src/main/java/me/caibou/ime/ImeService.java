@@ -82,7 +82,7 @@ public class ImeService extends InputMethodService implements KeyboardListener {
         if (candidateContainer == null) {
             LayoutInflater inflater = getLayoutInflater();
             candidateContainer = (CandidateContainer) inflater.inflate(R.layout.layout_candi_container, null);
-            candidateContainer.setInputMethodService(this);
+            candidateContainer.setKeyboardListener(this);
             candidatesView = candidateContainer.candidatesView;
             skbContainer.setCandidatesView(candidatesView);
         }
@@ -137,6 +137,8 @@ public class ImeService extends InputMethodService implements KeyboardListener {
     @Override
     public void onCommitText(String text) {
         commitResultText(text);
+        skbContainer.keyboardFocus();
+        resetToIdleState();
     }
 
     @Override
