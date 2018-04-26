@@ -1,23 +1,26 @@
 package me.caibou.ime.keyboard;
 
 import android.content.Context;
-import android.inputmethodservice.InputMethodService;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.List;
+
 import me.caibou.ime.MeasureHelper;
+import me.caibou.ime.OnDrawFinishListener;
 import me.caibou.ime.R;
 
 /**
  * @author caibou
  */
-public class CandidateContainer extends RelativeLayout {
+public class CandidateContainer extends RelativeLayout implements OnDrawFinishListener {
 
     private static final float VIEW_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.087037f;
     public CandidatesView candidatesView;
-    public InputMethodService inputMethodService;
-    public KeyboardListener keyboardListener;
+    private ImageView ivLeftMore, ivRightMore;
+    private KeyboardListener keyboardListener;
 
     public CandidateContainer(Context context) {
         super(context);
@@ -79,10 +82,22 @@ public class CandidateContainer extends RelativeLayout {
         this.keyboardListener = keyboardListener;
     }
 
+    public void updateCandidates(List<String> candidates) {
+        candidatesView.updateCandidates(candidates);
+    }
+
+    private void updateMoreIconStatus() {
+        ivLeftMore.setVisibility(candidatesView.canBackward() ? VISIBLE : GONE);
+        ivRightMore.setVisibility(candidatesView.canForward() ? VISIBLE : GONE);
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         candidatesView = findViewById(R.id.candi_view);
+        candidatesView.setDrawFinishListener(this);
+        ivLeftMore = findViewById(R.id.iv_left_more);
+        ivRightMore = findViewById(R.id.iv_right_more);
     }
 
     @Override
@@ -90,5 +105,10 @@ public class CandidateContainer extends RelativeLayout {
         widthMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureHelper.SCREEN_WIDTH, MeasureSpec.EXACTLY);
         heightMeasureSpec = MeasureSpec.makeMeasureSpec((int) VIEW_HEIGHT, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    public void onDrawFinish() {
+        updateMoreIconStatus();
     }
 }

@@ -63,12 +63,6 @@ public class ImeService extends InputMethodService implements KeyboardListener {
     }
 
     @Override
-    public void onDestroy() {
-        unbindService(pinyinDecoderServiceConnection);
-        super.onDestroy();
-    }
-
-    @Override
     public View onCreateInputView() {
         LayoutInflater inflater = getLayoutInflater();
         skbContainer = (SkbContainer) inflater.inflate(R.layout.layout_skb_container, null);
@@ -142,6 +136,12 @@ public class ImeService extends InputMethodService implements KeyboardListener {
     }
 
     @Override
+    public void onDestroy() {
+        unbindService(pinyinDecoderServiceConnection);
+        super.onDestroy();
+    }
+
+    @Override
     public void onSoftKeyClick(SoftKey softKey) {
         InputConnection connection = getCurrentInputConnection();
         int keyCode = softKey.getKeyCode();
@@ -171,7 +171,7 @@ public class ImeService extends InputMethodService implements KeyboardListener {
         if (keyCode == SkbContainer.KEYCODE_CANDI_SYMBOL){
             String[] symbols = getResources().getStringArray(R.array.candidate_symbols);
             List<String> symbolList = Arrays.asList(symbols);
-            candidatesView.updateCandidates(symbolList);
+            candidateContainer.updateCandidates(symbolList);
         }
 
         if (KeyEvent.KEYCODE_DEL == keyCode) {
@@ -206,7 +206,7 @@ public class ImeService extends InputMethodService implements KeyboardListener {
                 decodingInfo.updateImeState(ImeState.STATE_PREDICT);
                 decodingInfo.resetCandidates();
                 if (decodingInfo.mCandidatesList.size() > 0) {
-                    candidatesView.updateCandidates(decodingInfo.mCandidatesList);
+                    candidateContainer.updateCandidates(decodingInfo.mCandidatesList);
                 } else {
                     resetToIdleState();
                 }
@@ -222,7 +222,7 @@ public class ImeService extends InputMethodService implements KeyboardListener {
                         decodingInfo.updateImeState(ImeState.STATE_COMPOSING);
                     }
                 }
-                candidatesView.updateCandidates(decodingInfo.mCandidatesList);
+                candidateContainer.updateCandidates(decodingInfo.mCandidatesList);
             }
         } else {
             resetToIdleState();

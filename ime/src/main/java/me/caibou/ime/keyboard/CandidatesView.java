@@ -3,7 +3,6 @@ package me.caibou.ime.keyboard;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -14,12 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.caibou.ime.MeasureHelper;
+import me.caibou.ime.OnDrawFinishListener;
 import me.caibou.ime.R;
 
 /**
  * @author caibou
  */
 public class CandidatesView extends View {
+
+    private static final String TAG = "CandidatesView";
 
     private static final float SELECT_BOUND_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.074074f;
     private static final float SELECT_BOUND_PADDING = MeasureHelper.SCREEN_HEIGHT * 0.0125f;
@@ -28,8 +30,7 @@ public class CandidatesView extends View {
     private static final float FONT_SIZE = 48f;
 
     private Paint paint;
-    private RectF textBound;
-    private Rect selectedBound;
+    private RectF lastTextBound;
     private Scroller scroller;
 
     private List<String> candidates;
@@ -37,6 +38,8 @@ public class CandidatesView extends View {
     private int selectIndex;
     private float[] wordsX;
     private boolean cursorAlive;
+
+    private OnDrawFinishListener drawFinishListener;
 
     public CandidatesView(Context context) {
         this(context, null);
@@ -59,8 +62,7 @@ public class CandidatesView extends View {
         paint.setTextSize(FONT_SIZE);
         textHeight = MeasureHelper.getFontHeight(paint);
 
-        selectedBound = new Rect();
-        textBound = new RectF();
+        lastTextBound = new RectF();
     }
 
     @Override
@@ -72,7 +74,13 @@ public class CandidatesView extends View {
             // TODO: 2018/4/23 Draw tab
         } else {
             drawCandidates(canvas);
+            // Add 5 pixels as compensation for float to int
+            totalLength = lastTextBound.right + 5;
         }
+        if (drawFinishListener != null){
+            drawFinishListener.onDrawFinish();
+        }
+
     }
 
     private void drawCandidates(Canvas canvas) {
@@ -83,14 +91,10 @@ public class CandidatesView extends View {
             calTextBound(textWidth);
             if (index == selectIndex && cursorAlive) {
                 drawSelectBound(canvas);
-                selectedBound.set((int) textBound.left, (int) textBound.top,
-                        (int) textBound.right, (int) textBound.bottom);
             }
             drawCandidateWord(canvas, text);
             wordsX[index] = currentBoundX;
-            totalLength = textBound.right + 5;
             currentBoundX += SPACING + textWidth;
-
         }
     }
 
@@ -99,7 +103,7 @@ public class CandidatesView extends View {
         float top = (getHeight() - SELECT_BOUND_HEIGHT) / 2;
         float right = currentBoundX + textWidth + SELECT_BOUND_PADDING * 2;
         float bottom = top + SELECT_BOUND_HEIGHT;
-        textBound.set(left, top, right, bottom);
+        lastTextBound.set(left, top, right, bottom);
     }
 
     private void drawCandidateWord(Canvas canvas, String text) {
@@ -113,12 +117,12 @@ public class CandidatesView extends View {
         paint.reset();
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(getResources().getColor(R.color.default_key_selected_bg));
-        canvas.drawRect(textBound, paint);
+        canvas.drawRect(lastTextBound, paint);
 
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(2);
         paint.setColor(getResources().getColor(R.color.default_soft_key_stroke));
-        canvas.drawRect(textBound, paint);
+        canvas.drawRect(lastTextBound, paint);
     }
 
     public void cursorForward() {
@@ -162,6 +166,14 @@ public class CandidatesView extends View {
         }
     }
 
+    public boolean canForward() {
+        return totalLength > VIEW_WIDTH && scrolledX < totalLength - VIEW_WIDTH;
+    }
+
+    public boolean canBackward() {
+        return scrolledX > 0;
+    }
+
     public String selectCandidate() {
         return candidates.get(selectIndex);
     }
@@ -169,6 +181,7 @@ public class CandidatesView extends View {
     public void clean() {
         selectIndex = 0;
         scrolledX = 0;
+        totalLength = 0;
         candidates.clear();
         invalidate();
     }
@@ -189,6 +202,10 @@ public class CandidatesView extends View {
         scrolledX = 0;
         scrollTo(0, 0);
         invalidate();
+    }
+
+    public void setDrawFinishListener(OnDrawFinishListener drawFinishListener){
+        this.drawFinishListener = drawFinishListener;
     }
 
     @Override
