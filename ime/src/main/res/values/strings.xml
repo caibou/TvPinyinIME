@@ -10,4 +10,9 @@
         <item>)</item>
         <item>*</item>
     </string-array>
+
+    <string name="label_go_key">Go</string>
+    <string name="label_next">下\n一\n个</string>
+    <string name="label_send">发\n送</string>
+    <string name="label_finish">完\n成</string>
 </resources>

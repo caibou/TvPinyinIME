@@ -20,9 +20,9 @@
 
         <keys labels="4|5|6|0" codes="11|12|13|7" width="@dimen/big_key_width" splitter="|"/>
 
-        <key label="下一个" label_orientation="@integer/vertical" width="@dimen/middle_key_width"
+        <key label="" label_orientation="@integer/vertical" width="@dimen/middle_key_width"
             normal_bg_color="@color/toggle_key_normal_bg" text_size="24px" cross_row="2"
-            stroke_color="@color/toggle_key_stroke"/>
+            stroke_color="@color/toggle_key_stroke" keycode="@integer/key_code_options" />
     </row>
 
     <row>

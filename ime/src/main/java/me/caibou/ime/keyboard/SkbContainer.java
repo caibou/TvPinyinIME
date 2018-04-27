@@ -1,6 +1,7 @@
 package me.caibou.ime.keyboard;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -31,6 +32,7 @@ public class SkbContainer extends FrameLayout {
     public static final int KEYCODE_COMMIT_LABEL = -105;
     public static final int KEYCODE_COMPOSE_WORDS = -106;
     public static final int KEYCODE_CASE_SWITCH = -107;
+    public static final int KEYCODE_OPTIONS = -108;
 
     public SkbContainer(@NonNull Context context) {
         this(context, null);
@@ -67,7 +69,7 @@ public class SkbContainer extends FrameLayout {
                 if (selectRow - 1 >= 0) {
                     selectRow--;
                     softKeyboard.setSelectRow(selectRow);
-                } else {
+                } else if (candidatesView.hasCandidates()){
                     softKeyboard.getSelectedKey().setPressed(false);
                     keyboardView.setCursorAlive(false);
                     candidatesView.setCursorAlive(true);
@@ -138,6 +140,7 @@ public class SkbContainer extends FrameLayout {
                 break;
             case KEYCODE_COMPOSE_WORDS:
             case KEYCODE_CANDI_SYMBOL:
+            case KEYCODE_OPTIONS:
                 listener.onSoftKeyClick(softKey);
                 break;
         }
@@ -149,6 +152,11 @@ public class SkbContainer extends FrameLayout {
 
     public void setCandidatesView(CandidatesView candidatesView) {
         this.candidatesView = candidatesView;
+    }
+
+    public void setImeOptions(Resources res, int options) {
+        softKeyboard.setImeOptions(res, options);
+        keyboardView.invalidate();
     }
 
     public void keyboardFocus(){

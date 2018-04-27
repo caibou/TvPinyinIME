@@ -174,6 +174,10 @@ public class CandidatesView extends View {
         return scrolledX > 0;
     }
 
+    public boolean hasCandidates(){
+        return !candidates.isEmpty();
+    }
+
     public String selectCandidate() {
         return candidates.get(selectIndex);
     }
@@ -182,6 +186,7 @@ public class CandidatesView extends View {
         selectIndex = 0;
         scrolledX = 0;
         totalLength = 0;
+        cursorAlive = false;
         candidates.clear();
         invalidate();
     }

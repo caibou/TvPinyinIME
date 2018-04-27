@@ -25,8 +25,8 @@
 
         <key label="," keycode="55"/>
 
-        <key label="下一个" label_orientation="@integer/vertical" cross_row="2"
-            normal_bg_color="@color/toggle_key_normal_bg" text_size="24px"
+        <key label="完\n成" label_orientation="@integer/vertical" cross_row="2"  text_size="24px"
+            normal_bg_color="@color/toggle_key_normal_bg" keycode="@integer/key_code_options"
             width="@dimen/middle_key_width" stroke_color="@color/toggle_key_stroke"/>
     </row>
 

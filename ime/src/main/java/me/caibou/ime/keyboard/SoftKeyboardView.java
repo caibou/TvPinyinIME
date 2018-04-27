@@ -83,8 +83,7 @@ public class SoftKeyboardView extends View {
 
         paint.reset();
         paint.setStyle(Paint.Style.FILL);
-        int keyBackgroundColor = softKey.isPressed() ? softKey.getPressedColor() :
-                softKey.isSelected() ? softKey.getSelectedColor() : softKey.getNormalColor();
+        int keyBackgroundColor = softKey.isSelected() ? softKey.getSelectedColor() : softKey.getNormalColor();
         paint.setColor(keyBackgroundColor);
         canvas.drawRect(rectF, paint);
 
@@ -94,8 +93,8 @@ public class SoftKeyboardView extends View {
         paint.setColor(softKey.getStrokeColor());
         canvas.drawRect(rectF, paint);
 
-        if (softKey.getIcon() != null) {
-            Drawable icon = softKey.getIcon();
+        Drawable icon = softKey.getIcon();
+        if (icon != null) {
             int left = (int) (rectF.centerX() - softKey.getIconWidth() / 2);
             int top = (int) (rectF.centerY() - softKey.getIconHeight() / 2);
             int right = (int) (left + softKey.getIconWidth());
@@ -104,9 +103,9 @@ public class SoftKeyboardView extends View {
             icon.draw(canvas);
         }
 
-        if (!TextUtils.isEmpty(softKey.getKeyLabel())) {
-            String label = softKey.getKeyLabel();
-            if (isUpperCase){
+        String label = softKey.getKeyLabel();
+        if (!TextUtils.isEmpty(label)) {
+            if (isUpperCase) {
                 label = label.toUpperCase();
             }
             paint.reset();

@@ -40,9 +40,9 @@
 
         <key label="l" keycode="40"/>
 
-        <key label="下一个" label_orientation="@integer/vertical" stroke_color="@color/toggle_key_stroke"
+        <key label="完\n成" label_orientation="@integer/vertical" stroke_color="@color/toggle_key_stroke"
             normal_bg_color="@color/toggle_key_normal_bg" text_size="24px" cross_row="2"
-            width="@dimen/middle_key_width" />
+            width="@dimen/middle_key_width" keycode="@integer/key_code_options"/>
     </row>
 
     <row>
