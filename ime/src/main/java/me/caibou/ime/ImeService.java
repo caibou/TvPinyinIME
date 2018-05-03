@@ -32,8 +32,6 @@ import me.caibou.ime.pattern.SoftKey;
  */
 public class ImeService extends InputMethodService implements KeyboardListener {
 
-    private static final String TAG = "ImeService";
-
     private SkbContainer skbContainer;
     private CandidateContainer candidateContainer;
     private CandidatesView candidatesView;
@@ -58,7 +56,6 @@ public class ImeService extends InputMethodService implements KeyboardListener {
             if (null == pinyinDecoderServiceConnection) {
                 pinyinDecoderServiceConnection = new PinyinDecoderServiceConnection();
             }
-            // Bind service
             bindService(serviceIntent, pinyinDecoderServiceConnection, Context.BIND_AUTO_CREATE);
         }
     }
@@ -101,6 +98,12 @@ public class ImeService extends InputMethodService implements KeyboardListener {
     }
 
     @Override
+    public void onFinishInput() {
+        resetToIdleState();
+        super.onFinishInput();
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (isImeServiceStop()) {
             if (candidateContainer.onSoftKeyDown(keyCode, event)){
@@ -110,6 +113,7 @@ public class ImeService extends InputMethodService implements KeyboardListener {
             if (skbContainer.onSoftKeyDown(keyCode, event)) {
                 return true;
             }
+
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -139,7 +143,6 @@ public class ImeService extends InputMethodService implements KeyboardListener {
         return skbContainer != null && isInputViewShown();
     }
 
-
     @Override
     public boolean onEvaluateFullscreenMode() {
         return false;
@@ -150,6 +153,12 @@ public class ImeService extends InputMethodService implements KeyboardListener {
         commitResultText(text);
         skbContainer.keyboardFocus();
         resetToIdleState();
+    }
+
+    @Override
+    public void onFinishCandidatesView(boolean finishingInput) {
+        resetToIdleState();
+        super.onFinishCandidatesView(finishingInput);
     }
 
     @Override
@@ -268,12 +277,13 @@ public class ImeService extends InputMethodService implements KeyboardListener {
      * Connection used for binding to the Pinyin decoding service.
      */
     public class PinyinDecoderServiceConnection implements ServiceConnection {
+
         public void onServiceConnected(ComponentName name, IBinder service) {
             decodingInfo.pinyinDecoderService = IPinyinDecoderService.Stub
                     .asInterface(service);
         }
 
-        public void onServiceDisconnected(ComponentName name) {
-        }
+        public void onServiceDisconnected(ComponentName name) { }
+
     }
 }

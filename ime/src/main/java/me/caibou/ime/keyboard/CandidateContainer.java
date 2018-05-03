@@ -74,6 +74,14 @@ public class CandidateContainer extends RelativeLayout implements OnDrawFinishLi
                     return true;
                 }
                 break;
+            case KeyEvent.KEYCODE_BACK:
+                if (candidatesView.hasCandidates()){
+                    candidatesView.clean();
+                    candidatesView.setCursorAlive(false);
+                    keyboardListener.onCommitText("");
+                    return true;
+                }
+                break;
         }
         return false;
     }
