@@ -47,30 +47,30 @@ public class SkbContainer extends FrameLayout {
     }
 
     public boolean onSoftKeyDown(int keyCode, KeyEvent event) {
-        int selectRow = softKeyboard.getSelectRow();
-        int selectIndex = softKeyboard.getSelectIndex();
+        int selectRow = softKeyboard.selectRow;
+        int selectIndex = softKeyboard.selectIndex;
         int rowSize = softKeyboard.getRow(selectRow).keyCount();
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 if (selectIndex - 1 >= 0) {
                     selectIndex--;
-                    softKeyboard.setSelectIndex(selectIndex);
+                    softKeyboard.selectIndex = selectIndex;
                     keyboardView.invalidate();
                 }
                 return true;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
                 if (selectIndex + 1 < rowSize) {
                     selectIndex++;
-                    softKeyboard.setSelectIndex(selectIndex);
+                    softKeyboard.selectIndex = selectIndex;
                     keyboardView.invalidate();
                 }
                 return true;
             case KeyEvent.KEYCODE_DPAD_UP:
                 if (selectRow - 1 >= 0) {
                     selectRow--;
-                    softKeyboard.setSelectRow(selectRow);
+                    softKeyboard.selectRow = selectRow;
                 } else if (candidatesView.hasCandidates()){
-                    softKeyboard.getSelectedKey().setPressed(false);
+                    softKeyboard.getSelectedKey().pressed = false;
                     keyboardView.setCursorAlive(false);
                     candidatesView.setCursorAlive(true);
                 }
@@ -82,13 +82,13 @@ public class SkbContainer extends FrameLayout {
                     candidatesView.setCursorAlive(false);
                 } else if (selectRow + 1 < softKeyboard.getRowNum()) {
                     selectRow++;
-                    softKeyboard.setSelectRow(selectRow);
+                    softKeyboard.selectRow = selectRow;
                     keyboardView.invalidate();
                 }
                 return true;
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
-                softKeyboard.getSelectedKey().setPressed(true);
+                softKeyboard.getSelectedKey().pressed = true;
                 keyboardView.invalidate();
                 return true;
 
@@ -103,8 +103,8 @@ public class SkbContainer extends FrameLayout {
             case KeyEvent.KEYCODE_ENTER:
                 SoftKey softKey = softKeyboard.getSelectedKey();
                 if (softKey != null) {
-                    softKey.setPressed(false);
-                    softKey.setSelected(false);
+                    softKey.pressed = false;
+                    softKey.selected = false;
                     if (softKey.isCustomizeKey()) {
                         processCustomizeKey(softKey);
                     } else {
@@ -119,9 +119,9 @@ public class SkbContainer extends FrameLayout {
     }
 
     private void processCustomizeKey(SoftKey softKey) {
-        switch (softKey.getKeyCode()) {
+        switch (softKey.keyCode) {
             case KEYCODE_COMMIT_LABEL:
-                listener.onCommitText(softKey.getKeyLabel());
+                listener.onCommitText(softKey.keyLabel);
                 break;
             case KEYCODE_SWITCH_TO_EN:
                 updateKeyboardLayout(R.xml.skb_qwerty_en);

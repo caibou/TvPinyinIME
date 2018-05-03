@@ -170,23 +170,22 @@ public class ImeService extends InputMethodService implements KeyboardListener {
     @Override
     public void onSoftKeyClick(SoftKey softKey) {
         InputConnection connection = getCurrentInputConnection();
-        int keyCode = softKey.getKeyCode();
+        int keyCode = softKey.keyCode;
         if (KeyEvent.KEYCODE_A <= keyCode && keyCode <= KeyEvent.KEYCODE_Z) {
             if (inputMethodSwitcher.isChineseText()) {
-                char splChar = softKey.getKeyLabel().charAt(0);
+                char splChar = softKey.keyLabel.charAt(0);
                 decodingInfo.addSplChar(splChar, false);
                 chooseAndUpdate(-1);
                 connection.setComposingText(decodingInfo.getOrigianlSplStr(), 1);
-
             } else {
-                String label = softKey.getKeyLabel();
-                commitResultText(inputMethodSwitcher.isUpperCase() ? label.toUpperCase() : label);
+                commitResultText(inputMethodSwitcher.isUpperCase() ?
+                        softKey.keyLabel.toUpperCase() : softKey.keyLabel);
             }
             return;
         }
 
         if (keyCode == SkbContainer.KEYCODE_COMPOSE_WORDS){
-            for (char splChar : softKey.getKeyLabel().toCharArray()){
+            for (char splChar : softKey.keyLabel.toCharArray()){
                 decodingInfo.addSplChar(splChar, false);
                 chooseAndUpdate(-1);
                 connection.setComposingText(decodingInfo.getOrigianlSplStr(), 1);

@@ -15,11 +15,9 @@ import me.caibou.ime.pattern.SoftKey;
  */
 public class SoftKeyboard {
 
-    private int backgroundColor;
-    private float keysSpacing;
-
-    private int selectRow, selectIndex;
-    private SoftKey selectedKey, optionsKey;
+    public int backgroundColor;
+    public int selectRow, selectIndex;
+    public SoftKey optionsKey;
 
     private List<KeyRow> rows = new ArrayList<>();
 
@@ -29,7 +27,7 @@ public class SoftKeyboard {
         }
         KeyRow row = rows.get(rows.size() - 1);
         row.addKey(softKey);
-        if (softKey.getKeyCode() == SkbContainer.KEYCODE_OPTIONS) {
+        if (softKey.keyCode == SkbContainer.KEYCODE_OPTIONS) {
             optionsKey = softKey;
         }
     }
@@ -40,16 +38,16 @@ public class SoftKeyboard {
         }
         switch (options&(EditorInfo.IME_MASK_ACTION|EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
             case EditorInfo.IME_ACTION_GO:
-                optionsKey.setKeyLabel(res.getString(R.string.label_go_key));
+                optionsKey.keyLabel = res.getString(R.string.label_go_key);
                 break;
             case EditorInfo.IME_ACTION_NEXT:
-                optionsKey.setKeyLabel(res.getString(R.string.label_next));
+                optionsKey.keyLabel = res.getString(R.string.label_next);
                 break;
             case EditorInfo.IME_ACTION_SEND:
-                optionsKey.setKeyLabel(res.getString(R.string.label_send));
+                optionsKey.keyLabel = res.getString(R.string.label_send);
                 break;
             case EditorInfo.IME_ACTION_DONE:
-                optionsKey.setKeyLabel(res.getString(R.string.label_finish));
+                optionsKey.keyLabel = res.getString(R.string.label_finish);
                 break;
         }
     }
@@ -66,56 +64,8 @@ public class SoftKeyboard {
         return rows.size();
     }
 
-    public int getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    public void setBackgroundColor(int backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    public float getKeysSpacing() {
-        return keysSpacing;
-    }
-
-    public void setKeysSpacing(float keysSpacing) {
-        this.keysSpacing = keysSpacing;
-    }
-
-    public int getSelectRow() {
-        return selectRow;
-    }
-
-    public void setSelectRow(int selectRow) {
-        this.selectRow = selectRow;
-    }
-
-    public int getSelectIndex() {
-        return selectIndex;
-    }
-
-    public void setSelectIndex(int selectIndex) {
-        this.selectIndex = selectIndex;
-    }
-
     public SoftKey getSelectedKey() {
         return rows.get(selectRow).getKey(selectIndex);
-    }
-
-    public void setSelectedKey(SoftKey selectedKey) {
-        this.selectedKey = selectedKey;
-    }
-
-    public void cleanSelect() {
-        selectedKey = null;
-    }
-
-    public void reSelect() {
-        this.selectedKey = rows.get(selectRow).getKey(selectIndex);
-    }
-
-    public boolean isSelected() {
-        return selectedKey != null;
     }
 
 }
