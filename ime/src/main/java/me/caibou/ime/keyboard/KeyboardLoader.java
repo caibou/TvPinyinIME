@@ -171,6 +171,9 @@ public class KeyboardLoader {
 
         defKeySpacing = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEYS_SPACING,
                 resources.getDimension(R.dimen.default_soft_keys_spacing));
+
+        keyboard.horizontalSpacing = defKeySpacing;
+        keyboard.verticalSpacing = defKeySpacing;
     }
 
     private void loadRow(@NonNull SoftKeyboard softKeyboard) {

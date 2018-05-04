@@ -18,6 +18,7 @@ public class SoftKeyboard {
     public int backgroundColor;
     public int selectRow, selectIndex;
     public SoftKey optionsKey;
+    public float verticalSpacing, horizontalSpacing;
 
     private List<KeyRow> rows = new ArrayList<>();
 

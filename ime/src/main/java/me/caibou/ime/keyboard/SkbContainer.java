@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import me.caibou.ime.InputMethodSwitcher;
 import me.caibou.ime.MeasureHelper;
 import me.caibou.ime.R;
+import me.caibou.ime.pattern.KeyRow;
 import me.caibou.ime.pattern.SoftKey;
 
 /**
@@ -47,51 +48,62 @@ public class SkbContainer extends FrameLayout {
     }
 
     public boolean onSoftKeyDown(int keyCode, KeyEvent event) {
-        int selectRow = softKeyboard.selectRow;
-        int selectIndex = softKeyboard.selectIndex;
-        int rowSize = softKeyboard.getRow(selectRow).keyCount();
+        SoftKey currKey = softKeyboard.getSelectedKey();
+        float nextX, nextY;
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
-                if (selectIndex - 1 >= 0) {
-                    selectIndex--;
-                    softKeyboard.selectIndex = selectIndex;
-                    keyboardView.invalidate();
-                }
+                nextX = currKey.left - softKeyboard.horizontalSpacing;
+                nextY = currKey.bottom;
+                mapKey(nextX, nextY);
                 return true;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
-                if (selectIndex + 1 < rowSize) {
-                    selectIndex++;
-                    softKeyboard.selectIndex = selectIndex;
+                nextX = currKey.right + softKeyboard.horizontalSpacing;
+                nextY = currKey.bottom;
+                mapKey(nextX, nextY);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                nextX = currKey.left;
+                nextY = currKey.top - softKeyboard.verticalSpacing;
+                if (!mapKey(nextX, nextY) && candidatesView.hasCandidates()) {
+                    currKey.pressed = false;
+                    keyboardView.setCursorAlive(false);
+                    candidatesView.setCursorAlive(true);
                     keyboardView.invalidate();
                 }
                 return true;
-            case KeyEvent.KEYCODE_DPAD_UP:
-                if (selectRow - 1 >= 0) {
-                    selectRow--;
-                    softKeyboard.selectRow = selectRow;
-                } else if (candidatesView.hasCandidates()){
-                    softKeyboard.getSelectedKey().pressed = false;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                nextX = currKey.left;
+                nextY = currKey.bottom + softKeyboard.verticalSpacing;
+                if (!mapKey(nextX, nextY) && !keyboardView.isCursorAlive()) {
+                    currKey.pressed = false;
                     keyboardView.setCursorAlive(false);
                     candidatesView.setCursorAlive(true);
-                }
-                keyboardView.invalidate();
-                return true;
-            case KeyEvent.KEYCODE_DPAD_DOWN:
-                if (!keyboardView.isCursorAlive()){
-                    keyboardView.setCursorAlive(true);
-                    candidatesView.setCursorAlive(false);
-                } else if (selectRow + 1 < softKeyboard.getRowNum()) {
-                    selectRow++;
-                    softKeyboard.selectRow = selectRow;
                     keyboardView.invalidate();
                 }
                 return true;
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
-                softKeyboard.getSelectedKey().pressed = true;
+                currKey.pressed = true;
                 keyboardView.invalidate();
                 return true;
 
+        }
+        return false;
+    }
+
+    private boolean mapKey(float nextX, float nextY) {
+        for (int i = 0, size = softKeyboard.getRowNum(); i < size; i++) {
+            KeyRow keyRow = softKeyboard.getRow(i);
+            for (int index = 0, num = keyRow.keyCount(); index < num; index++) {
+                SoftKey softKey = keyRow.getKey(index);
+                if (softKey.left <= nextX && nextX <= softKey.right &&
+                        softKey.top <= nextY && nextY <= softKey.bottom) {
+                    softKeyboard.selectRow = i;
+                    softKeyboard.selectIndex = index;
+                    keyboardView.invalidate();
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -159,7 +171,7 @@ public class SkbContainer extends FrameLayout {
         keyboardView.invalidate();
     }
 
-    public void keyboardFocus(){
+    public void keyboardFocus() {
         keyboardView.setCursorAlive(true);
     }
 
