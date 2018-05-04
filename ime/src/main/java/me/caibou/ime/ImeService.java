@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
 import com.android.inputmethod.pinyin.DecodingInfo;
@@ -79,22 +78,6 @@ public class ImeService extends InputMethodService implements KeyboardListener {
             skbContainer.setCandidatesView(candidatesView);
         }
         return candidateContainer;
-    }
-
-    @Override
-    public void onStartInput(EditorInfo attribute, boolean restarting) {
-        super.onStartInput(attribute, restarting);
-        if (skbContainer != null){
-            skbContainer.setImeOptions(getResources(), attribute.imeOptions);
-        }
-    }
-
-    @Override
-    public void onStartInputView(EditorInfo info, boolean restarting) {
-        super.onStartInputView(info, restarting);
-        if (skbContainer != null){
-            skbContainer.setImeOptions(getResources(), info.imeOptions);
-        }
     }
 
     @Override

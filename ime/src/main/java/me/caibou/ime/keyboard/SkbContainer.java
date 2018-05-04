@@ -1,7 +1,6 @@
 package me.caibou.ime.keyboard;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -164,11 +163,6 @@ public class SkbContainer extends FrameLayout {
 
     public void setCandidatesView(CandidatesView candidatesView) {
         this.candidatesView = candidatesView;
-    }
-
-    public void setImeOptions(Resources res, int options) {
-        softKeyboard.setImeOptions(res, options);
-        keyboardView.invalidate();
     }
 
     public void keyboardFocus() {

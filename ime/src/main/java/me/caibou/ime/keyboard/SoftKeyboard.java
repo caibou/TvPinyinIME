@@ -1,12 +1,8 @@
 package me.caibou.ime.keyboard;
 
-import android.content.res.Resources;
-import android.view.inputmethod.EditorInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import me.caibou.ime.R;
 import me.caibou.ime.pattern.KeyRow;
 import me.caibou.ime.pattern.SoftKey;
 
@@ -30,26 +26,6 @@ public class SoftKeyboard {
         row.addKey(softKey);
         if (softKey.keyCode == SkbContainer.KEYCODE_OPTIONS) {
             optionsKey = softKey;
-        }
-    }
-
-    public void setImeOptions(Resources res, int options) {
-        if (optionsKey == null){
-            return;
-        }
-        switch (options&(EditorInfo.IME_MASK_ACTION|EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
-            case EditorInfo.IME_ACTION_GO:
-                optionsKey.keyLabel = res.getString(R.string.label_go_key);
-                break;
-            case EditorInfo.IME_ACTION_NEXT:
-                optionsKey.keyLabel = res.getString(R.string.label_next);
-                break;
-            case EditorInfo.IME_ACTION_SEND:
-                optionsKey.keyLabel = res.getString(R.string.label_send);
-                break;
-            case EditorInfo.IME_ACTION_DONE:
-                optionsKey.keyLabel = res.getString(R.string.label_finish);
-                break;
         }
     }
 
