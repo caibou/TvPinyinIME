@@ -2,6 +2,7 @@ package me.caibou.ime.keyboard;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -106,6 +107,14 @@ public class CandidateContainer extends RelativeLayout implements OnDrawFinishLi
         candidatesView.setDrawFinishListener(this);
         ivLeftMore = findViewById(R.id.iv_left_more);
         ivRightMore = findViewById(R.id.iv_right_more);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Log.d("sdf", "onSizeChanged: " + MeasureHelper.KEYBOARD_WIDTH);
+        Log.d("sdf", "onSizeChanged: " + MeasureHelper.KEYBOARD_WIDTH);
+        Log.d("sdf", "onSizeChanged() called with: w = [" + w + "], h = [" + h + "], oldw = [" + oldw + "], oldh = [" + oldh + "]");
     }
 
     @Override

@@ -66,4 +66,18 @@ public class XmlParseUtil {
         }
         return null;
     }
+
+    public static float loadFloat(Resources res, XmlResourceParser parser, String attr, float defValue){
+        int resId = parser.getAttributeResourceValue(null, attr, NON_VALUE);
+        float result = defValue;
+        if (resId == NON_VALUE){
+            result = parser.getAttributeFloatValue(null, attr, defValue);
+        } else {
+            String value = res.getString(resId);
+            if (!TextUtils.isEmpty(value)){
+                result = Float.parseFloat(value);
+            }
+        }
+        return result;
+    }
 }

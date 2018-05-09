@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="default_soft_key_width">90px</dimen>
-    <dimen name="default_soft_key_height">80px</dimen>
+    <string name="default_soft_key_width">0.047</string>
+    <string name="default_soft_key_height">0.234</string>
     <dimen name="default_soft_key_stroke_width">2px</dimen>
-    <dimen name="default_soft_key_icon_size">44px</dimen>
+    <string name="default_soft_key_icon_size">0.022916</string>
     <dimen name="default_soft_key_text_size">40px</dimen>
-    <dimen name="default_soft_keys_spacing">18px</dimen>
-    <dimen name="default_keyboard_position_y">28px</dimen>
+    <string name="default_soft_keys_spacing">0.009</string>
+    <string name="default_keyboard_position_y">0.088</string>
 
     <dimen name="soft_keyboard_height">436px</dimen>
-    <dimen name="soft_keyboard_padding_top">28px</dimen>
-    <dimen name="soft_keyboard_padding_left">213px</dimen>
-    <dimen name="soft_keyboard_padding_bottom">36px</dimen>
-    <dimen name="soft_keyboard_padding_right">213px</dimen>
+    <string name="soft_keyboard_padding_top">0.088</string>
+    <string name="soft_keyboard_padding_left">0.111</string>
+    <string name="soft_keyboard_padding_bottom">0.105</string>
+    <string name="soft_keyboard_padding_right">0.111</string>
     <dimen name="candidate_column_height">94px</dimen>
 
     <dimen name="keyboard_dividing_line_width">2px</dimen>
 
     <dimen name="function_key_text_size">36px</dimen>
-    <dimen name="big_key_width">178px</dimen>
-    <dimen name="middle_key_width">110px</dimen>
+    <string name="big_key_width">0.093</string>
+    <string name="middle_key_width">0.057</string>
 
-    <dimen name="space_long_icon_width">80px</dimen>
-    <dimen name="space_short_icon_width">48px</dimen>
-    <dimen name="space_icon_height">20px</dimen>
+    <string name="space_long_icon_width">0.041</string>
+    <string name="space_short_icon_width">0.025</string>
+    <string name="space_icon_height">0.058</string>
 
-    <dimen name="px_213">213px</dimen>
-    <dimen name="px_124">124px</dimen>
-    <dimen name="px_415">415px</dimen>
-    <dimen name="px_159">159px</dimen>
+    <string name="px_213">0.110937</string>
+    <string name="px_124">0.064583</string>
+    <string name="px_415">0.216145</string>
+    <string name="px_159">0.082812</string>
     <dimen name="px_28">28px</dimen>
+
 </resources>

@@ -2,6 +2,7 @@ package me.caibou.ime;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -17,8 +18,10 @@ public class MeasureHelper {
     public static void measure(Context context){
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         assert wm != null;
+        DisplayMetrics dm = new DisplayMetrics();
         Display display = wm.getDefaultDisplay();
-        KEYBOARD_WIDTH = display.getWidth();
+        display.getMetrics(dm);
+        KEYBOARD_WIDTH = dm.widthPixels;
         CANDIDATE_VIEW_HEIGHT = (int) (KEYBOARD_WIDTH * 0.048958f);
         KEYBOARD_HEIGHT = (int) (KEYBOARD_WIDTH * 0.178125f);
     }

@@ -34,9 +34,15 @@ public class SoftKey extends Element {
     public String toString() {
         return "SoftKey{" +
                 "keyCode=" + keyCode +
+                ", keyLabel='" + keyLabel + '\'' +
                 ", selected=" + selected +
                 ", pressed=" + pressed +
-                ", keyLabel='" + keyLabel + '\'' +
+                ", left=" + left +
+                ", top=" + top +
+                ", right=" + right +
+                ", bottom=" + bottom +
+                ", width=" + width +
+                ", height=" + height +
                 '}';
     }
 }

@@ -13,6 +13,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+import me.caibou.ime.MeasureHelper;
 import me.caibou.ime.R;
 import me.caibou.ime.XmlParseUtil;
 import me.caibou.ime.pattern.Element;
@@ -111,7 +112,7 @@ public class KeyboardLoader {
         switch (attr) {
             case TAG_ROW:
                 nextPosX = defPosX;
-                nextPosY += (defKeySpacing + 80);
+                nextPosY += (defKeySpacing + defKeyHeight);
                 break;
         }
     }
@@ -148,19 +149,19 @@ public class KeyboardLoader {
                 resources.getColor(R.color.default_key_selected_bg));
         defPressedColor = XmlParseUtil.loadColor(resources, xmlParser, ATTR_DEF_KEY_PRESSED_COLOR,
                 resources.getColor(R.color.default_key_pressed_bg));
-        defKeyWidth = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_WIDTH,
-                resources.getDimension(R.dimen.default_soft_key_width));
-        defKeyHeight = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_HEIGHT,
-                resources.getDimension(R.dimen.default_soft_key_height));
-        defPosX = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_POS_X,
-                resources.getDimension(R.dimen.default_soft_key_height));
-        defPosY = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_POS_Y,
-                resources.getDimension(R.dimen.default_soft_key_height));
+        defKeyWidth = loadWidth(resources, xmlParser, ATTR_DEF_KEY_WIDTH,
+                loadPercentValue(resources, MeasureHelper.KEYBOARD_WIDTH, R.string.default_soft_key_width));
+        defKeyHeight = loadHeight(resources, xmlParser, ATTR_DEF_KEY_HEIGHT,
+                loadPercentValue(resources, MeasureHelper.KEYBOARD_HEIGHT, R.string.default_soft_key_height));
+        defPosX = loadWidth(resources, xmlParser, ATTR_DEF_POS_X,
+                loadPercentValue(resources, MeasureHelper.KEYBOARD_WIDTH, R.string.default_soft_key_height));
+        defPosY = loadHeight(resources, xmlParser, ATTR_DEF_POS_Y,
+                loadPercentValue(resources, MeasureHelper.KEYBOARD_HEIGHT, R.string.default_soft_key_height));
         defKeyStrokeWidth = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_STROKE_WIDTH,
                 resources.getDimension(R.dimen.default_soft_key_stroke_width));
-        defKeyIconSize = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEY_ICON_SIZE,
-                resources.getDimension(R.dimen.default_soft_key_icon_size));
-        defTextSize = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_KEY_TEXT_SIZE,
+        defKeyIconSize = loadWidth(resources, xmlParser, ATTR_DEF_KEY_ICON_SIZE,
+                loadPercentValue(resources, MeasureHelper.KEYBOARD_WIDTH, R.string.default_soft_key_icon_size));
+        defTextSize = loadWidth(resources, xmlParser, ATTR_KEY_TEXT_SIZE,
                 resources.getDimension(R.dimen.default_soft_key_text_size));
     }
 
@@ -169,8 +170,7 @@ public class KeyboardLoader {
                 resources, xmlParser, ATTR_KEYBOARD_BACKGROUND_COLOR,
                 R.color.keyboard_background_color);
 
-        defKeySpacing = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_DEF_KEYS_SPACING,
-                resources.getDimension(R.dimen.default_soft_keys_spacing));
+        defKeySpacing = loadWidth(resources, xmlParser, ATTR_DEF_KEYS_SPACING, 0.009375f * MeasureHelper.KEYBOARD_WIDTH);
 
         keyboard.horizontalSpacing = defKeySpacing;
         keyboard.verticalSpacing = defKeySpacing;
@@ -201,10 +201,10 @@ public class KeyboardLoader {
     }
 
     private void loadPattern(Element element, XmlResourceParser xmlParser) {
-        float width = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_WIDTH, defKeyWidth);
-        float height = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_HEIGHT, defKeyHeight);
-        float left = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_POS_X, nextPosX);
-        float top = XmlParseUtil.loadDimen(resources, xmlParser, ATTR_POS_Y, nextPosY);
+        float width = loadWidth(resources, xmlParser, ATTR_WIDTH, defKeyWidth);
+        float height = loadHeight(resources, xmlParser, ATTR_HEIGHT, defKeyHeight);
+        float left = loadWidth(resources, xmlParser, ATTR_POS_X, nextPosX);
+        float top = loadHeight(resources, xmlParser, ATTR_POS_Y, nextPosY);
 
         element.width = width;
         element.height = height;
@@ -227,9 +227,9 @@ public class KeyboardLoader {
                 resources, xmlParser, ATTR_CROSS_COLUMNS, 1);
         softKey.crossRow = XmlParseUtil.loadInt(
                 resources, xmlParser, ATTR_CROSS_ROW, 1);
-        softKey.iconWidth = XmlParseUtil.loadDimen(
+        softKey.iconWidth = loadWidth(
                 resources, xmlParser, ATTR_ICON_WIDTH, defKeyIconSize);
-        softKey.iconHeight = XmlParseUtil.loadDimen(
+        softKey.iconHeight = loadHeight(
                 resources, xmlParser, ATTR_ICON_HEIGHT, defKeyIconSize);
         softKey.normalColor = XmlParseUtil.loadColor(
                 resources, xmlParser, ATTR_NORMAL_BG_COLOR, defKeyNormalColor);
@@ -259,6 +259,26 @@ public class KeyboardLoader {
         softKey.width = softKey.width * softKey.crossColumn + defKeySpacing * (softKey.crossColumn - 1);
         softKey.height = softKey.height * softKey.crossRow + defKeySpacing * (softKey.crossRow - 1);
         softKey.fixRange();
+    }
+
+    private float loadWidth(Resources res, XmlResourceParser parser, String attr, float defValue) {
+        float percent = XmlParseUtil.loadFloat(res, parser, attr, XmlParseUtil.NON_VALUE);
+        if (percent == XmlParseUtil.NON_VALUE) {
+            return defValue;
+        }
+        return percent * MeasureHelper.KEYBOARD_WIDTH;
+    }
+
+    private float loadHeight(Resources res, XmlResourceParser parser, String attr, float defValue) {
+        float percent = XmlParseUtil.loadFloat(res, parser, attr, XmlParseUtil.NON_VALUE);
+        if (percent == XmlParseUtil.NON_VALUE) {
+            return defValue;
+        }
+        return percent * MeasureHelper.KEYBOARD_HEIGHT;
+    }
+
+    private float loadPercentValue(Resources res, float parent, int resId) {
+        return Float.parseFloat(res.getString(resId)) * parent;
     }
 
 }

@@ -79,8 +79,8 @@ public class SkbContainer extends FrameLayout {
                 } else {
                     keyboardView.setCursorAlive(true);
                     candidatesView.setCursorAlive(false);
+                    keyboardView.invalidate();
                 }
-                keyboardView.invalidate();
                 return true;
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
