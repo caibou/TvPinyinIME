@@ -23,10 +23,10 @@ public class CandidatesView extends View {
 
     private static final String TAG = "CandidatesView";
 
-    private static final float SELECT_BOUND_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.074074f;
-    private static final float SELECT_BOUND_PADDING = MeasureHelper.SCREEN_HEIGHT * 0.0125f;
-    private static final float VIEW_WIDTH = MeasureHelper.SCREEN_WIDTH * 0.745833f;
-    private static final float SPACING = MeasureHelper.SCREEN_WIDTH * 0.046875f;
+    private static final float SELECT_BOUND_HEIGHT = MeasureHelper.CANDIDATE_VIEW_HEIGHT * 0.744680f;
+    private static final float SELECT_BOUND_PADDING = MeasureHelper.KEYBOARD_WIDTH * 0.0125f;
+    private static final float VIEW_WIDTH = MeasureHelper.KEYBOARD_WIDTH * 0.745833f;
+    private static final float SPACING = MeasureHelper.KEYBOARD_WIDTH * 0.046875f;
     private static final float FONT_SIZE = 48f;
 
     private Paint paint;

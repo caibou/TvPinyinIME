@@ -17,7 +17,7 @@ import me.caibou.ime.R;
  */
 public class CandidateContainer extends RelativeLayout implements OnDrawFinishListener {
 
-    private static final float VIEW_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.087037f;
+    private static final float VIEW_HEIGHT = MeasureHelper.KEYBOARD_WIDTH * 0.048958f;
     public CandidatesView candidatesView;
     private ImageView ivLeftMore, ivRightMore;
     private KeyboardListener keyboardListener;
@@ -110,7 +110,7 @@ public class CandidateContainer extends RelativeLayout implements OnDrawFinishLi
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        widthMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureHelper.SCREEN_WIDTH, MeasureSpec.EXACTLY);
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureHelper.KEYBOARD_WIDTH, MeasureSpec.EXACTLY);
         heightMeasureSpec = MeasureSpec.makeMeasureSpec((int) VIEW_HEIGHT, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }

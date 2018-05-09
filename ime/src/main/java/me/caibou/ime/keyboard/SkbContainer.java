@@ -18,12 +18,12 @@ import me.caibou.ime.pattern.SoftKey;
  */
 public class SkbContainer extends FrameLayout {
 
+    private static final String TAG = "SkbContainer";
+
     private SoftKeyboardView keyboardView;
     private CandidatesView candidatesView;
     private SoftKeyboard softKeyboard;
     private KeyboardListener listener;
-
-    private static final float VIEW_HEIGHT = MeasureHelper.SCREEN_HEIGHT * 0.314814f;
 
     public static final int KEYCODE_SWITCH_TO_QWERTY_CN = -100;
     public static final int KEYCODE_SWITCH_TO_EN = -101;
@@ -71,14 +71,16 @@ public class SkbContainer extends FrameLayout {
                 }
                 return true;
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                nextX = currKey.left;
-                nextY = currKey.bottom + softKeyboard.verticalSpacing;
-                if (!mapKey(nextX, nextY) && !keyboardView.isCursorAlive()) {
-                    currKey.pressed = false;
-                    keyboardView.setCursorAlive(false);
-                    candidatesView.setCursorAlive(true);
-                    keyboardView.invalidate();
+                currKey.pressed = false;
+                if (keyboardView.isCursorAlive()){
+                    nextX = currKey.left;
+                    nextY = currKey.bottom + softKeyboard.verticalSpacing;
+                    mapKey(nextX, nextY);
+                } else {
+                    keyboardView.setCursorAlive(true);
+                    candidatesView.setCursorAlive(false);
                 }
+                keyboardView.invalidate();
                 return true;
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
@@ -186,7 +188,7 @@ public class SkbContainer extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         widthMeasureSpec = MeasureSpec.makeMeasureSpec(widthMeasureSpec, MeasureSpec.AT_MOST);
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec((int) VIEW_HEIGHT, MeasureSpec.EXACTLY);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureHelper.KEYBOARD_HEIGHT, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }
