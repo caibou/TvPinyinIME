@@ -4,7 +4,7 @@
     <string name="default_soft_key_height">0.234</string>
     <dimen name="default_soft_key_stroke_width">2px</dimen>
     <string name="default_soft_key_icon_size">0.022916</string>
-    <dimen name="default_soft_key_text_size">40px</dimen>
+    <string name="default_soft_key_text_size">0.020833</string>
     <string name="default_soft_keys_spacing">0.009</string>
     <string name="default_keyboard_position_y">0.088</string>
 
@@ -17,7 +17,7 @@
 
     <dimen name="keyboard_dividing_line_width">2px</dimen>
 
-    <dimen name="function_key_text_size">36px</dimen>
+    <string name="function_key_text_size">0.01875</string>
     <string name="big_key_width">0.093</string>
     <string name="middle_key_width">0.057</string>
 

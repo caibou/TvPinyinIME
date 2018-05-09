@@ -162,7 +162,7 @@ public class KeyboardLoader {
         defKeyIconSize = loadWidth(resources, xmlParser, ATTR_DEF_KEY_ICON_SIZE,
                 loadPercentValue(resources, MeasureHelper.KEYBOARD_WIDTH, R.string.default_soft_key_icon_size));
         defTextSize = loadWidth(resources, xmlParser, ATTR_KEY_TEXT_SIZE,
-                resources.getDimension(R.dimen.default_soft_key_text_size));
+                loadPercentValue(resources, MeasureHelper.KEYBOARD_WIDTH, R.string.default_soft_key_text_size));
     }
 
     private void loadKeyboard(XmlResourceParser xmlParser, SoftKeyboard keyboard) {
@@ -219,7 +219,7 @@ public class KeyboardLoader {
                 resources, xmlParser, ATTR_KEYCODE, KeyEvent.KEYCODE_UNKNOWN);
         softKey.textColor = XmlParseUtil.loadColor(
                 resources, xmlParser, ATTR_TEXT_COLOR, defKeyTextColor);
-        softKey.textSize = XmlParseUtil.loadDimen(
+        softKey.textSize = loadWidth(
                 resources, xmlParser, ATTR_KEY_TEXT_SIZE, defTextSize);
         softKey.keyLabel = XmlParseUtil.loadString(
                 resources, xmlParser, ATTR_LABEL);

@@ -27,7 +27,7 @@ public class CandidatesView extends View {
     private static final float SELECT_BOUND_PADDING = MeasureHelper.KEYBOARD_WIDTH * 0.0125f;
     private static final float VIEW_WIDTH = MeasureHelper.KEYBOARD_WIDTH * 0.745833f;
     private static final float SPACING = MeasureHelper.KEYBOARD_WIDTH * 0.046875f;
-    private static final float FONT_SIZE = 48f;
+    private static final float FONT_SIZE = MeasureHelper.KEYBOARD_WIDTH * 0.025f;
 
     private Paint paint;
     private RectF lastTextBound;

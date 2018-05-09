@@ -3,7 +3,7 @@
 
     <row margin_top="" >
         <!-- Switch to Chinese keyboard button -->
-        <key label="英/中" text_size="@dimen/function_key_text_size" width="@string/big_key_width"
+        <key label="英/中" text_size="@string/function_key_text_size" width="@string/big_key_width"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
             keycode="@integer/key_code_switch_to_cn_all" text_color="@color/toggle_key_label" />
 
@@ -25,13 +25,13 @@
 
         <key label="," keycode="55"/>
 
-        <key label="完\n成" label_orientation="@integer/vertical" cross_row="2"  text_size="24px"
+        <key label="完\n成" label_orientation="@integer/vertical" cross_row="2"  text_size="0.0125"
             normal_bg_color="@color/toggle_key_normal_bg" keycode="@integer/key_code_options"
             width="@string/middle_key_width" stroke_color="@color/toggle_key_stroke"/>
     </row>
 
     <row>
-        <key label="符" text_size="@dimen/function_key_text_size" width="@string/big_key_width"
+        <key label="符" text_size="@string/function_key_text_size" width="@string/big_key_width"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
             text_color="@color/toggle_key_label" keycode="@integer/key_code_candidate_symbol"/>
 
