@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <dimen name="default_soft_key_stroke_width">2px</dimen>
+
     <string name="default_soft_key_width">0.047</string>
     <string name="default_soft_key_height">0.234</string>
-    <dimen name="default_soft_key_stroke_width">2px</dimen>
+
     <string name="default_soft_key_icon_size">0.022916</string>
     <string name="default_soft_key_text_size">0.020833</string>
     <string name="default_soft_keys_spacing">0.009</string>
     <string name="default_keyboard_position_y">0.088</string>
 
-    <dimen name="soft_keyboard_height">436px</dimen>
     <string name="soft_keyboard_padding_top">0.088</string>
     <string name="soft_keyboard_padding_left">0.111</string>
     <string name="soft_keyboard_padding_bottom">0.105</string>
     <string name="soft_keyboard_padding_right">0.111</string>
-    <dimen name="candidate_column_height">94px</dimen>
-
-    <dimen name="keyboard_dividing_line_width">2px</dimen>
 
     <string name="function_key_text_size">0.01875</string>
     <string name="big_key_width">0.093</string>
@@ -29,6 +28,5 @@
     <string name="px_124">0.064583</string>
     <string name="px_415">0.216145</string>
     <string name="px_159">0.082812</string>
-    <dimen name="px_28">28px</dimen>
 
 </resources>

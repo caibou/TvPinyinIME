@@ -70,17 +70,14 @@ public class CandidatesView extends View {
         currentBoundX = 0;
         int backgroundColor = getResources().getColor(R.color.keyboard_background_color);
         canvas.drawColor(backgroundColor);
-        if (candidates.isEmpty()) {
-            // TODO: 2018/4/23 Draw tab
-        } else {
-            drawCandidates(canvas);
-            // Add 5 pixels as compensation for float to int
-            totalLength = lastTextBound.right + 5;
-        }
+
+        drawCandidates(canvas);
+        // Add 5 pixels as compensation for float to int
+        totalLength = lastTextBound.right + 5;
+
         if (drawFinishListener != null){
             drawFinishListener.onDrawFinish();
         }
-
     }
 
     private void drawCandidates(Canvas canvas) {
