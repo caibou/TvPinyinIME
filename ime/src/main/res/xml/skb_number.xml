@@ -28,7 +28,7 @@
     <row>
         <key label="符" text_size="@string/function_key_text_size" width="@string/big_key_width"
             stroke_color="@color/toggle_key_stroke" normal_bg_color="@color/toggle_key_normal_bg"
-            text_color="@color/toggle_key_label" />
+            text_color="@color/toggle_key_label" keycode="@integer/key_code_candidate_symbol"/>
 
         <keys labels="7|8|9|@" codes="14|15|16|77" width="@string/big_key_width" splitter="|"/>
 
