@@ -4,7 +4,7 @@
 
 
 
-<img src="art/shot_screen.gif" width=250/>
+<img src="art/shot_screen.gif" width=1080/>
 
 
 
