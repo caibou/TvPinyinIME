@@ -34,6 +34,8 @@ public class SkbContainer extends FrameLayout {
     public static final int KEYCODE_CASE_SWITCH = -107;
     public static final int KEYCODE_OPTIONS = -108;
 
+    public static final int FIX_LENGTH = 10;
+
     public SkbContainer(@NonNull Context context) {
         this(context, null);
     }
@@ -51,18 +53,18 @@ public class SkbContainer extends FrameLayout {
         float nextX, nextY;
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
-                nextX = currKey.left - softKeyboard.horizontalSpacing;
-                nextY = currKey.bottom;
+                nextX = currKey.left - softKeyboard.horizontalSpacing - FIX_LENGTH;
+                nextY = currKey.bottom - FIX_LENGTH;
                 mapKey(nextX, nextY);
                 return true;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
-                nextX = currKey.right + softKeyboard.horizontalSpacing;
-                nextY = currKey.bottom;
+                nextX = currKey.right + softKeyboard.horizontalSpacing + FIX_LENGTH;
+                nextY = currKey.bottom - FIX_LENGTH;
                 mapKey(nextX, nextY);
                 return true;
             case KeyEvent.KEYCODE_DPAD_UP:
-                nextX = currKey.left;
-                nextY = currKey.top - softKeyboard.verticalSpacing;
+                nextX = currKey.left + FIX_LENGTH;
+                nextY = currKey.top - softKeyboard.verticalSpacing - FIX_LENGTH;
                 if (!mapKey(nextX, nextY) && candidatesView.hasCandidates()) {
                     currKey.pressed = false;
                     keyboardView.setCursorAlive(false);
@@ -73,8 +75,8 @@ public class SkbContainer extends FrameLayout {
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 currKey.pressed = false;
                 if (keyboardView.isCursorAlive()){
-                    nextX = currKey.left;
-                    nextY = currKey.bottom + softKeyboard.verticalSpacing;
+                    nextX = currKey.left + FIX_LENGTH;
+                    nextY = currKey.bottom + softKeyboard.verticalSpacing + FIX_LENGTH;
                     mapKey(nextX, nextY);
                 } else {
                     keyboardView.setCursorAlive(true);
@@ -92,7 +94,7 @@ public class SkbContainer extends FrameLayout {
         return false;
     }
 
-    private boolean mapKey(float nextX, float nextY) {
+    private boolean          mapKey(float nextX, float nextY) {
         for (int i = 0, size = softKeyboard.getRowNum(); i < size; i++) {
             KeyRow keyRow = softKeyboard.getRow(i);
             for (int index = 0, num = keyRow.keyCount(); index < num; index++) {
